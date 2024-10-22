@@ -1,6 +1,5 @@
 # Code generated for API Clients. DO NOT EDIT.
 
-
 openapi: 3.0.0
 info:
   title: ngrok OpenAPI
@@ -187,7 +186,7 @@ paths:
         Create a new API key. The generated API key can be used to authenticate to the ngrok API.
       tags:
         - APIKeys
-      operationId: APIKeysCreate
+      operationId: ApiKeysCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -209,7 +208,7 @@ paths:
         List all API keys owned by this account
       tags:
         - APIKeys
-      operationId: APIKeysList
+      operationId: ApiKeysList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -237,7 +236,7 @@ paths:
         Delete an API key by ID
       tags:
         - APIKeys
-      operationId: APIKeysDelete
+      operationId: ApiKeysDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -257,7 +256,7 @@ paths:
         Get the details of an API key by ID.
       tags:
         - APIKeys
-      operationId: APIKeysGet
+      operationId: ApiKeysGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -281,7 +280,7 @@ paths:
         Update attributes of an API key by ID.
       tags:
         - APIKeys
-      operationId: APIKeysUpdate
+      operationId: ApiKeysUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -704,7 +703,7 @@ paths:
       summary: Create
       tags:
         - HTTPResponseBackends
-      operationId: HTTPResponseBackendsCreate
+      operationId: HttpResponseBackendsCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -723,7 +722,7 @@ paths:
       summary: List
       tags:
         - HTTPResponseBackends
-      operationId: HTTPResponseBackendsList
+      operationId: HttpResponseBackendsList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -748,7 +747,7 @@ paths:
       summary: Delete
       tags:
         - HTTPResponseBackends
-      operationId: HTTPResponseBackendsDelete
+      operationId: HttpResponseBackendsDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -765,7 +764,7 @@ paths:
       summary: Get
       tags:
         - HTTPResponseBackends
-      operationId: HTTPResponseBackendsGet
+      operationId: HttpResponseBackendsGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -786,7 +785,7 @@ paths:
       summary: Update
       tags:
         - HTTPResponseBackends
-      operationId: HTTPResponseBackendsUpdate
+      operationId: HttpResponseBackendsUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1545,7 +1544,7 @@ paths:
         Create an HTTPS Edge Route
       tags:
         - EdgesHTTPSRoutes
-      operationId: EdgesHTTPSRoutesCreate
+      operationId: EdgesHttpsRoutesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -1575,7 +1574,7 @@ paths:
         Get an HTTPS Edge Route by ID
       tags:
         - EdgesHTTPSRoutes
-      operationId: EdgesHTTPSRoutesGet
+      operationId: EdgesHttpsRoutesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -1606,7 +1605,7 @@ paths:
         Updates an HTTPS Edge Route by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
         - EdgesHTTPSRoutes
-      operationId: EdgesHTTPSRoutesUpdate
+      operationId: EdgesHttpsRoutesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -1642,7 +1641,7 @@ paths:
         Delete an HTTPS Edge Route by ID
       tags:
         - EdgesHTTPSRoutes
-      operationId: EdgesHTTPSRoutesDelete
+      operationId: EdgesHttpsRoutesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -1670,7 +1669,7 @@ paths:
         Create an HTTPS Edge
       tags:
         - EdgesHTTPS
-      operationId: EdgesHTTPSCreate
+      operationId: EdgesHttpsCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -1692,7 +1691,7 @@ paths:
         Returns a list of all HTTPS Edges on this account
       tags:
         - EdgesHTTPS
-      operationId: EdgesHTTPSList
+      operationId: EdgesHttpsList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -1720,7 +1719,7 @@ paths:
         Get an HTTPS Edge by ID
       tags:
         - EdgesHTTPS
-      operationId: EdgesHTTPSGet
+      operationId: EdgesHttpsGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1744,7 +1743,7 @@ paths:
         Updates an HTTPS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
         - EdgesHTTPS
-      operationId: EdgesHTTPSUpdate
+      operationId: EdgesHttpsUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1773,7 +1772,7 @@ paths:
         Delete an HTTPS Edge by ID
       tags:
         - EdgesHTTPS
-      operationId: EdgesHTTPSDelete
+      operationId: EdgesHttpsDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1792,7 +1791,7 @@ paths:
       summary: Replace
       tags:
         - HTTPSEdgeMutualTLSModule
-      operationId: HTTPSEdgeMutualTLSModuleReplace
+      operationId: HttpsEdgeMutualTlsModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1816,7 +1815,7 @@ paths:
       summary: Get
       tags:
         - HTTPSEdgeMutualTLSModule
-      operationId: HTTPSEdgeMutualTLSModuleGet
+      operationId: HttpsEdgeMutualTlsModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1837,7 +1836,7 @@ paths:
       summary: Delete
       tags:
         - HTTPSEdgeMutualTLSModule
-      operationId: HTTPSEdgeMutualTLSModuleDelete
+      operationId: HttpsEdgeMutualTlsModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1855,7 +1854,7 @@ paths:
       summary: Replace
       tags:
         - HTTPSEdgeTLSTerminationModule
-      operationId: HTTPSEdgeTLSTerminationModuleReplace
+      operationId: HttpsEdgeTlsTerminationModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1879,7 +1878,7 @@ paths:
       summary: Get
       tags:
         - HTTPSEdgeTLSTerminationModule
-      operationId: HTTPSEdgeTLSTerminationModuleGet
+      operationId: HttpsEdgeTlsTerminationModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -1900,7 +1899,7 @@ paths:
       summary: Delete
       tags:
         - HTTPSEdgeTLSTerminationModule
-      operationId: HTTPSEdgeTLSTerminationModuleDelete
+      operationId: HttpsEdgeTlsTerminationModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -2000,7 +1999,7 @@ paths:
       summary: Replace
       tags:
         - EdgeRouteIPRestrictionModule
-      operationId: EdgeRouteIPRestrictionModuleReplace
+      operationId: EdgeRouteIpRestrictionModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2029,7 +2028,7 @@ paths:
       summary: Get
       tags:
         - EdgeRouteIPRestrictionModule
-      operationId: EdgeRouteIPRestrictionModuleGet
+      operationId: EdgeRouteIpRestrictionModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2057,7 +2056,7 @@ paths:
       summary: Delete
       tags:
         - EdgeRouteIPRestrictionModule
-      operationId: EdgeRouteIPRestrictionModuleDelete
+      operationId: EdgeRouteIpRestrictionModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2574,7 +2573,7 @@ paths:
       summary: Replace
       tags:
         - EdgeRouteSAMLModule
-      operationId: EdgeRouteSAMLModuleReplace
+      operationId: EdgeRouteSamlModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2603,7 +2602,7 @@ paths:
       summary: Get
       tags:
         - EdgeRouteSAMLModule
-      operationId: EdgeRouteSAMLModuleGet
+      operationId: EdgeRouteSamlModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2631,7 +2630,7 @@ paths:
       summary: Delete
       tags:
         - EdgeRouteSAMLModule
-      operationId: EdgeRouteSAMLModuleDelete
+      operationId: EdgeRouteSamlModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2656,7 +2655,7 @@ paths:
       summary: Replace
       tags:
         - EdgeRouteOIDCModule
-      operationId: EdgeRouteOIDCModuleReplace
+      operationId: EdgeRouteOidcModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2685,7 +2684,7 @@ paths:
       summary: Get
       tags:
         - EdgeRouteOIDCModule
-      operationId: EdgeRouteOIDCModuleGet
+      operationId: EdgeRouteOidcModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2713,7 +2712,7 @@ paths:
       summary: Delete
       tags:
         - EdgeRouteOIDCModule
-      operationId: EdgeRouteOIDCModuleDelete
+      operationId: EdgeRouteOidcModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2738,7 +2737,7 @@ paths:
       summary: Replace
       tags:
         - EdgeRouteWebsocketTCPConverterModule
-      operationId: EdgeRouteWebsocketTCPConverterModuleReplace
+      operationId: EdgeRouteWebsocketTcpConverterModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2767,7 +2766,7 @@ paths:
       summary: Get
       tags:
         - EdgeRouteWebsocketTCPConverterModule
-      operationId: EdgeRouteWebsocketTCPConverterModuleGet
+      operationId: EdgeRouteWebsocketTcpConverterModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2795,7 +2794,7 @@ paths:
       summary: Delete
       tags:
         - EdgeRouteWebsocketTCPConverterModule
-      operationId: EdgeRouteWebsocketTCPConverterModuleDelete
+      operationId: EdgeRouteWebsocketTcpConverterModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: edge_id
@@ -2986,7 +2985,7 @@ paths:
         Create a TCP Edge
       tags:
         - EdgesTCP
-      operationId: EdgesTCPCreate
+      operationId: EdgesTcpCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -3008,7 +3007,7 @@ paths:
         Returns a list of all TCP Edges on this account
       tags:
         - EdgesTCP
-      operationId: EdgesTCPList
+      operationId: EdgesTcpList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -3036,7 +3035,7 @@ paths:
         Get a TCP Edge by ID
       tags:
         - EdgesTCP
-      operationId: EdgesTCPGet
+      operationId: EdgesTcpGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3060,7 +3059,7 @@ paths:
         Updates a TCP Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
         - EdgesTCP
-      operationId: EdgesTCPUpdate
+      operationId: EdgesTcpUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3089,7 +3088,7 @@ paths:
         Delete a TCP Edge by ID
       tags:
         - EdgesTCP
-      operationId: EdgesTCPDelete
+      operationId: EdgesTcpDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3108,7 +3107,7 @@ paths:
       summary: Replace
       tags:
         - TCPEdgeBackendModule
-      operationId: TCPEdgeBackendModuleReplace
+      operationId: TcpEdgeBackendModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3132,7 +3131,7 @@ paths:
       summary: Get
       tags:
         - TCPEdgeBackendModule
-      operationId: TCPEdgeBackendModuleGet
+      operationId: TcpEdgeBackendModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3153,7 +3152,7 @@ paths:
       summary: Delete
       tags:
         - TCPEdgeBackendModule
-      operationId: TCPEdgeBackendModuleDelete
+      operationId: TcpEdgeBackendModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3171,7 +3170,7 @@ paths:
       summary: Replace
       tags:
         - TCPEdgeIPRestrictionModule
-      operationId: TCPEdgeIPRestrictionModuleReplace
+      operationId: TcpEdgeIpRestrictionModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3195,7 +3194,7 @@ paths:
       summary: Get
       tags:
         - TCPEdgeIPRestrictionModule
-      operationId: TCPEdgeIPRestrictionModuleGet
+      operationId: TcpEdgeIpRestrictionModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3216,7 +3215,7 @@ paths:
       summary: Delete
       tags:
         - TCPEdgeIPRestrictionModule
-      operationId: TCPEdgeIPRestrictionModuleDelete
+      operationId: TcpEdgeIpRestrictionModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3234,7 +3233,7 @@ paths:
       summary: Replace
       tags:
         - TCPEdgeTrafficPolicyModule
-      operationId: TCPEdgeTrafficPolicyModuleReplace
+      operationId: TcpEdgeTrafficPolicyModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3258,7 +3257,7 @@ paths:
       summary: Get
       tags:
         - TCPEdgeTrafficPolicyModule
-      operationId: TCPEdgeTrafficPolicyModuleGet
+      operationId: TcpEdgeTrafficPolicyModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3279,7 +3278,7 @@ paths:
       summary: Delete
       tags:
         - TCPEdgeTrafficPolicyModule
-      operationId: TCPEdgeTrafficPolicyModuleDelete
+      operationId: TcpEdgeTrafficPolicyModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3299,7 +3298,7 @@ paths:
         Create a TLS Edge
       tags:
         - EdgesTLS
-      operationId: EdgesTLSCreate
+      operationId: EdgesTlsCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -3321,7 +3320,7 @@ paths:
         Returns a list of all TLS Edges on this account
       tags:
         - EdgesTLS
-      operationId: EdgesTLSList
+      operationId: EdgesTlsList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -3349,7 +3348,7 @@ paths:
         Get a TLS Edge by ID
       tags:
         - EdgesTLS
-      operationId: EdgesTLSGet
+      operationId: EdgesTlsGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3373,7 +3372,7 @@ paths:
         Updates a TLS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
         - EdgesTLS
-      operationId: EdgesTLSUpdate
+      operationId: EdgesTlsUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3402,7 +3401,7 @@ paths:
         Delete a TLS Edge by ID
       tags:
         - EdgesTLS
-      operationId: EdgesTLSDelete
+      operationId: EdgesTlsDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3421,7 +3420,7 @@ paths:
       summary: Replace
       tags:
         - TLSEdgeBackendModule
-      operationId: TLSEdgeBackendModuleReplace
+      operationId: TlsEdgeBackendModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3445,7 +3444,7 @@ paths:
       summary: Get
       tags:
         - TLSEdgeBackendModule
-      operationId: TLSEdgeBackendModuleGet
+      operationId: TlsEdgeBackendModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3466,7 +3465,7 @@ paths:
       summary: Delete
       tags:
         - TLSEdgeBackendModule
-      operationId: TLSEdgeBackendModuleDelete
+      operationId: TlsEdgeBackendModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3484,7 +3483,7 @@ paths:
       summary: Replace
       tags:
         - TLSEdgeIPRestrictionModule
-      operationId: TLSEdgeIPRestrictionModuleReplace
+      operationId: TlsEdgeIpRestrictionModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3508,7 +3507,7 @@ paths:
       summary: Get
       tags:
         - TLSEdgeIPRestrictionModule
-      operationId: TLSEdgeIPRestrictionModuleGet
+      operationId: TlsEdgeIpRestrictionModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3529,7 +3528,7 @@ paths:
       summary: Delete
       tags:
         - TLSEdgeIPRestrictionModule
-      operationId: TLSEdgeIPRestrictionModuleDelete
+      operationId: TlsEdgeIpRestrictionModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3547,7 +3546,7 @@ paths:
       summary: Replace
       tags:
         - TLSEdgeMutualTLSModule
-      operationId: TLSEdgeMutualTLSModuleReplace
+      operationId: TlsEdgeMutualTlsModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3571,7 +3570,7 @@ paths:
       summary: Get
       tags:
         - TLSEdgeMutualTLSModule
-      operationId: TLSEdgeMutualTLSModuleGet
+      operationId: TlsEdgeMutualTlsModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3592,7 +3591,7 @@ paths:
       summary: Delete
       tags:
         - TLSEdgeMutualTLSModule
-      operationId: TLSEdgeMutualTLSModuleDelete
+      operationId: TlsEdgeMutualTlsModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3610,7 +3609,7 @@ paths:
       summary: Replace
       tags:
         - TLSEdgeTLSTerminationModule
-      operationId: TLSEdgeTLSTerminationModuleReplace
+      operationId: TlsEdgeTlsTerminationModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3634,7 +3633,7 @@ paths:
       summary: Get
       tags:
         - TLSEdgeTLSTerminationModule
-      operationId: TLSEdgeTLSTerminationModuleGet
+      operationId: TlsEdgeTlsTerminationModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3655,7 +3654,7 @@ paths:
       summary: Delete
       tags:
         - TLSEdgeTLSTerminationModule
-      operationId: TLSEdgeTLSTerminationModuleDelete
+      operationId: TlsEdgeTlsTerminationModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3673,7 +3672,7 @@ paths:
       summary: Replace
       tags:
         - TLSEdgeTrafficPolicyModule
-      operationId: TLSEdgeTrafficPolicyModuleReplace
+      operationId: TlsEdgeTrafficPolicyModuleReplace
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3697,7 +3696,7 @@ paths:
       summary: Get
       tags:
         - TLSEdgeTrafficPolicyModule
-      operationId: TLSEdgeTrafficPolicyModuleGet
+      operationId: TlsEdgeTrafficPolicyModuleGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -3718,7 +3717,7 @@ paths:
       summary: Delete
       tags:
         - TLSEdgeTrafficPolicyModule
-      operationId: TLSEdgeTrafficPolicyModuleDelete
+      operationId: TlsEdgeTrafficPolicyModuleDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4259,7 +4258,7 @@ paths:
         Create a new IP policy. It will not apply to any traffic until you associate to a traffic source via an endpoint configuration or IP restriction.
       tags:
         - IPPolicies
-      operationId: IPPoliciesCreate
+      operationId: IpPoliciesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -4281,7 +4280,7 @@ paths:
         List all IP policies on this account
       tags:
         - IPPolicies
-      operationId: IPPoliciesList
+      operationId: IpPoliciesList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -4309,7 +4308,7 @@ paths:
         Delete an IP policy. If the IP policy is referenced by another object for the purposes of traffic restriction it will be treated as if the IP policy remains but has zero rules.
       tags:
         - IPPolicies
-      operationId: IPPoliciesDelete
+      operationId: IpPoliciesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4329,7 +4328,7 @@ paths:
         Get detailed information about an IP policy by ID.
       tags:
         - IPPolicies
-      operationId: IPPoliciesGet
+      operationId: IpPoliciesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4353,7 +4352,7 @@ paths:
         Update attributes of an IP policy by ID
       tags:
         - IPPolicies
-      operationId: IPPoliciesUpdate
+      operationId: IpPoliciesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4381,7 +4380,7 @@ paths:
         Create a new IP policy rule attached to an IP Policy.
       tags:
         - IPPolicyRules
-      operationId: IPPolicyRulesCreate
+      operationId: IpPolicyRulesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -4403,7 +4402,7 @@ paths:
         List all IP policy rules on this account
       tags:
         - IPPolicyRules
-      operationId: IPPolicyRulesList
+      operationId: IpPolicyRulesList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -4431,7 +4430,7 @@ paths:
         Delete an IP policy rule.
       tags:
         - IPPolicyRules
-      operationId: IPPolicyRulesDelete
+      operationId: IpPolicyRulesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4451,7 +4450,7 @@ paths:
         Get detailed information about an IP policy rule by ID.
       tags:
         - IPPolicyRules
-      operationId: IPPolicyRulesGet
+      operationId: IpPolicyRulesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4475,7 +4474,7 @@ paths:
         Update attributes of an IP policy rule by ID
       tags:
         - IPPolicyRules
-      operationId: IPPolicyRulesUpdate
+      operationId: IpPolicyRulesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4503,7 +4502,7 @@ paths:
         Create a new IP restriction
       tags:
         - IPRestrictions
-      operationId: IPRestrictionsCreate
+      operationId: IpRestrictionsCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -4525,7 +4524,7 @@ paths:
         List all IP restrictions on this account
       tags:
         - IPRestrictions
-      operationId: IPRestrictionsList
+      operationId: IpRestrictionsList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -4553,7 +4552,7 @@ paths:
         Delete an IP restriction
       tags:
         - IPRestrictions
-      operationId: IPRestrictionsDelete
+      operationId: IpRestrictionsDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4573,7 +4572,7 @@ paths:
         Get detailed information about an IP restriction
       tags:
         - IPRestrictions
-      operationId: IPRestrictionsGet
+      operationId: IpRestrictionsGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4597,7 +4596,7 @@ paths:
         Update attributes of an IP restriction by ID
       tags:
         - IPRestrictions
-      operationId: IPRestrictionsUpdate
+      operationId: IpRestrictionsUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4911,7 +4910,7 @@ paths:
         Create a new SSH Certificate Authority
       tags:
         - SSHCertificateAuthorities
-      operationId: SSHCertificateAuthoritiesCreate
+      operationId: SshCertificateAuthoritiesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -4933,7 +4932,7 @@ paths:
         List all SSH Certificate Authorities on this account
       tags:
         - SSHCertificateAuthorities
-      operationId: SSHCertificateAuthoritiesList
+      operationId: SshCertificateAuthoritiesList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -4961,7 +4960,7 @@ paths:
         Delete an SSH Certificate Authority
       tags:
         - SSHCertificateAuthorities
-      operationId: SSHCertificateAuthoritiesDelete
+      operationId: SshCertificateAuthoritiesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -4981,7 +4980,7 @@ paths:
         Get detailed information about an SSH Certficate Authority
       tags:
         - SSHCertificateAuthorities
-      operationId: SSHCertificateAuthoritiesGet
+      operationId: SshCertificateAuthoritiesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5005,7 +5004,7 @@ paths:
         Update an SSH Certificate Authority
       tags:
         - SSHCertificateAuthorities
-      operationId: SSHCertificateAuthoritiesUpdate
+      operationId: SshCertificateAuthoritiesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5033,7 +5032,7 @@ paths:
         Create a new ssh_credential from an uploaded public SSH key. This ssh credential can be used to start new tunnels via ngrok's SSH gateway.
       tags:
         - SSHCredentials
-      operationId: SSHCredentialsCreate
+      operationId: SshCredentialsCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -5055,7 +5054,7 @@ paths:
         List all ssh credentials on this account
       tags:
         - SSHCredentials
-      operationId: SSHCredentialsList
+      operationId: SshCredentialsList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -5083,7 +5082,7 @@ paths:
         Delete an ssh_credential by ID
       tags:
         - SSHCredentials
-      operationId: SSHCredentialsDelete
+      operationId: SshCredentialsDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5103,7 +5102,7 @@ paths:
         Get detailed information about an ssh_credential
       tags:
         - SSHCredentials
-      operationId: SSHCredentialsGet
+      operationId: SshCredentialsGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5127,7 +5126,7 @@ paths:
         Update attributes of an ssh_credential by ID
       tags:
         - SSHCredentials
-      operationId: SSHCredentialsUpdate
+      operationId: SshCredentialsUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5155,7 +5154,7 @@ paths:
         Create a new SSH Host Certificate
       tags:
         - SSHHostCertificates
-      operationId: SSHHostCertificatesCreate
+      operationId: SshHostCertificatesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -5177,7 +5176,7 @@ paths:
         List all SSH Host Certificates issued on this account
       tags:
         - SSHHostCertificates
-      operationId: SSHHostCertificatesList
+      operationId: SshHostCertificatesList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -5205,7 +5204,7 @@ paths:
         Delete an SSH Host Certificate
       tags:
         - SSHHostCertificates
-      operationId: SSHHostCertificatesDelete
+      operationId: SshHostCertificatesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5225,7 +5224,7 @@ paths:
         Get detailed information about an SSH Host Certficate
       tags:
         - SSHHostCertificates
-      operationId: SSHHostCertificatesGet
+      operationId: SshHostCertificatesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5249,7 +5248,7 @@ paths:
         Update an SSH Host Certificate
       tags:
         - SSHHostCertificates
-      operationId: SSHHostCertificatesUpdate
+      operationId: SshHostCertificatesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5277,7 +5276,7 @@ paths:
         Create a new SSH User Certificate
       tags:
         - SSHUserCertificates
-      operationId: SSHUserCertificatesCreate
+      operationId: SshUserCertificatesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -5299,7 +5298,7 @@ paths:
         List all SSH User Certificates issued on this account
       tags:
         - SSHUserCertificates
-      operationId: SSHUserCertificatesList
+      operationId: SshUserCertificatesList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -5327,7 +5326,7 @@ paths:
         Delete an SSH User Certificate
       tags:
         - SSHUserCertificates
-      operationId: SSHUserCertificatesDelete
+      operationId: SshUserCertificatesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5347,7 +5346,7 @@ paths:
         Get detailed information about an SSH User Certficate
       tags:
         - SSHUserCertificates
-      operationId: SSHUserCertificatesGet
+      operationId: SshUserCertificatesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5371,7 +5370,7 @@ paths:
         Update an SSH User Certificate
       tags:
         - SSHUserCertificates
-      operationId: SSHUserCertificatesUpdate
+      operationId: SshUserCertificatesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5399,7 +5398,7 @@ paths:
         Upload a new TLS certificate
       tags:
         - TLSCertificates
-      operationId: TLSCertificatesCreate
+      operationId: TlsCertificatesCreate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
       requestBody:
@@ -5421,7 +5420,7 @@ paths:
         List all TLS certificates on this account
       tags:
         - TLSCertificates
-      operationId: TLSCertificatesList
+      operationId: TlsCertificatesList
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
@@ -5449,7 +5448,7 @@ paths:
         Delete a TLS certificate
       tags:
         - TLSCertificates
-      operationId: TLSCertificatesDelete
+      operationId: TlsCertificatesDelete
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5469,7 +5468,7 @@ paths:
         Get detailed information about a TLS certificate
       tags:
         - TLSCertificates
-      operationId: TLSCertificatesGet
+      operationId: TlsCertificatesGet
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
@@ -5493,7 +5492,7 @@ paths:
         Update attributes of a TLS Certificate by ID
       tags:
         - TLSCertificates
-      operationId: TLSCertificatesUpdate
+      operationId: TlsCertificatesUpdate
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: id
