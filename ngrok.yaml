@@ -8912,6 +8912,10 @@ components:
           description: >
             The ID of the owner (bot or user) that owns this endpoint
           $ref: "#/components/schemas/Ref"
+        principal_id:
+          description: >
+            TODO: deprecate me!
+          $ref: "#/components/schemas/Ref"
         traffic_policy:
           description: >
             The traffic policy attached to this endpoint
