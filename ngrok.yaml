@@ -4617,6 +4617,165 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPRestriction"
+  /kubernetes_operators:
+    post:
+      summary: Create
+      description: >
+        Create a new Kubernetes Operator
+      tags:
+        - KubernetesOperators
+      operationId: KubernetesOperatorsCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KubernetesOperatorCreate"
+      responses:
+        201:
+          description: >
+            Create a new Kubernetes Operator
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubernetesOperator"
+    get:
+      summary: List
+      description: >
+        List all Kubernetes Operators owned by this account
+      tags:
+        - KubernetesOperators
+      operationId: KubernetesOperatorsList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List all Kubernetes Operators owned by this account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubernetesOperatorList"
+  /kubernetes_operators/{id}:
+    patch:
+      summary: Update
+      description: >
+        Update an existing Kubernetes operator by ID.
+      tags:
+        - KubernetesOperators
+      operationId: KubernetesOperatorsUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            unique identifier for this Kubernetes Operator
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/KubernetesOperatorUpdate"
+      responses:
+        200:
+          description: >
+            Update an existing Kubernetes operator by ID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubernetesOperator"
+    delete:
+      summary: Delete
+      description: >
+        Delete a Kubernetes Operator
+      tags:
+        - KubernetesOperators
+      operationId: KubernetesOperatorsDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete a Kubernetes Operator
+    get:
+      summary: Get
+      description: >
+        Get of a Kubernetes Operator
+      tags:
+        - KubernetesOperators
+      operationId: KubernetesOperatorsGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get of a Kubernetes Operator
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/KubernetesOperator"
+  /kubernetes_operators/{id}/bound_endpoints:
+    get:
+      summary: GetBoundEndpoints
+      description: >
+        List Endpoints bound to a Kubernetes Operator
+      tags:
+        - KubernetesOperators
+      operationId: KubernetesOperatorsGetBoundEndpoints
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List Endpoints bound to a Kubernetes Operator
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EndpointList"
   /reserved_addrs:
     post:
       summary: Create
@@ -5592,6 +5751,19 @@ components:
     Paging:
       type: object
       properties:
+        before_id:
+          description: n/a
+          type: string
+        limit:
+          description: n/a
+          type: string
+    ItemPaging:
+      type: object
+      properties:
+        id:
+          description: >
+            a resource identifier
+          type: string
         before_id:
           description: n/a
           type: string
@@ -8900,7 +9072,7 @@ components:
           description: >
             the local address the tunnel forwards to
           type: string
-        upstream_proto:
+        upstream_protocol:
           description: >
             the protocol the agent uses to forward with
           type: string
@@ -8911,10 +9083,6 @@ components:
         principal:
           description: >
             The ID of the owner (bot or user) that owns this endpoint
-          $ref: "#/components/schemas/Ref"
-        principal_id:
-          description: >
-            TODO: deprecate me!
           $ref: "#/components/schemas/Ref"
         traffic_policy:
           description: >
@@ -8938,6 +9106,10 @@ components:
           description: >
             user supplied name for the endpoint
           type: string
+        pooling_enabled:
+          description: >
+            whether the endpoint allows pooling
+          type: boolean
     EndpointList:
       type: object
       properties:
@@ -8957,6 +9129,10 @@ components:
           type: string
     EndpointCreate:
       type: object
+      required:
+      - url
+      - type
+      - traffic_policy
       properties:
         url:
           description: >
@@ -8964,7 +9140,7 @@ components:
           type: string
         type:
           description: >
-            whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)`
+            Type of endpoint. Only 'cloud' is currently supported (represents a cloud endpoint). Defaults to 'cloud' if not specified.
           type: string
         traffic_policy:
           description: >
@@ -8984,6 +9160,9 @@ components:
           type: array
           items:
             type: string
+        pooling_enabled:
+          description: n/a
+          type: boolean
     EndpointUpdate:
       type: object
       properties:
@@ -9013,6 +9192,9 @@ components:
           type: array
           items:
             type: string
+        pooling_enabled:
+          description: n/a
+          type: boolean
     AgentSessionEvent:
       type: object
       properties:
@@ -9820,7 +10002,7 @@ components:
           type: string
         enabled_features:
           description: >
-            features enabled for this Kubernetes Operator. a subset of {"bindings", "ingress", and "gateway"}
+            features enabled for this Kubernetes Operator. a subset of "bindings", "ingress", and "gateway"
           type: array
           items:
             type: string
@@ -9839,13 +10021,9 @@ components:
     KubernetesOperatorBindingCreate:
       type: object
       properties:
-        name:
+        endpoint_selectors:
           description: >
-            the name by which endpoints can be bound to this Kubernetes Operator. starts with "k8s/"
-          type: string
-        allowed_urls:
-          description: >
-            the regexes for urls allowed to be bound to this operator
+            the list of cel expressions that filter the k8s bound endpoints for this operator
           type: array
           items:
             type: string
@@ -9874,7 +10052,7 @@ components:
           type: string
         enabled_features:
           description: >
-            features enabled for this Kubernetes Operator. a subset of {"bindings", "ingress", and "gateway"}
+            features enabled for this Kubernetes Operator. a subset of "bindings", "ingress", and "gateway"
           type: array
           items:
             type: string
@@ -9886,16 +10064,16 @@ components:
           description: >
             configuration for the Bindings feature of this Kubernetes Operator. set only if enabling the "bindings" feature
           $ref: "#/components/schemas/KubernetesOperatorBindingUpdate"
+        deployment:
+          description: >
+            configuration for the Deployment info
+          $ref: "#/components/schemas/KubernetesOperatorDeploymentUpdate"
     KubernetesOperatorBindingUpdate:
       type: object
       properties:
-        name:
+        endpoint_selectors:
           description: >
-            the name by which endpoints can be bound to this Kubernetes Operator. starts with "k8s/"
-          type: string
-        allowed_urls:
-          description: >
-            the regexes for urls allowed to be bound to this operator
+            the list of cel expressions that filter the k8s bound endpoints for this operator
           type: array
           items:
             type: string
@@ -9906,6 +10084,17 @@ components:
         ingress_endpoint:
           description: >
             the public ingress endpoint for this Kubernetes Operator
+          type: string
+    KubernetesOperatorDeploymentUpdate:
+      type: object
+      properties:
+        name:
+          description: >
+            the deployment name
+          type: string
+        version:
+          description: >
+            the version of this Kubernetes Operator
           type: string
     KubernetesOperator:
       type: object
@@ -9940,7 +10129,7 @@ components:
           $ref: "#/components/schemas/Ref"
         enabled_features:
           description: >
-            features enabled for this Kubernetes Operator. a subset of {"bindings", "ingress", and "gateway"}
+            features enabled for this Kubernetes Operator. a subset of "bindings", "ingress", and "gateway"
           type: array
           items:
             type: string
@@ -9971,6 +10160,10 @@ components:
           description: >
             the version of this Kubernetes Operator
           type: string
+        cluster_name:
+          description: >
+            user-given name for the cluster the Kubernetes Operator is deployed to
+          type: string
     KubernetesOperatorCert:
       type: object
       properties:
@@ -9989,13 +10182,9 @@ components:
     KubernetesOperatorBinding:
       type: object
       properties:
-        name:
+        endpoint_selectors:
           description: >
-            the name by which endpoints can be bound to this Kubernetes Operator. starts with "k8s/"
-          type: string
-        allowed_urls:
-          description: >
-            the regexes for urls allowed to be bound to this operator
+            the list of cel expressions that filter the k8s bound endpoints for this operator
           type: array
           items:
             type: string
@@ -10384,6 +10573,154 @@ components:
         subresource_uris:
           description: n/a
           type: object
+    SelfResponse:
+      type: object
+      properties:
+        apiKey:
+          description: n/a
+          $ref: "#/components/schemas/APIKey"
+        account:
+          description: n/a
+          $ref: "#/components/schemas/Account"
+        user:
+          description: n/a
+          type: string
+    Account:
+      type: object
+      properties:
+        id:
+          description: >
+            unique API key resource identifier
+          type: string
+        name:
+          description: n/a
+          type: string
+        created_at:
+          description: n/a
+          type: string
+        suspended:
+          description: n/a
+          type: boolean
+        enforce_sso:
+          description: n/a
+          type: boolean
+        min_api_version:
+          description: n/a
+          type: integer
+        min_agent_version:
+          description: n/a
+          type: string
+        user_mfa_required:
+          description: n/a
+          type: boolean
+        traffic_full_capture:
+          description: n/a
+          type: boolean
+    SecretCreate:
+      type: object
+      properties:
+        name:
+          description: >
+            Name of secret
+          type: string
+        value:
+          description: >
+            Value of secret
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Secret
+          type: string
+        description:
+          description: >
+            description of Secret
+          type: string
+        vault_id:
+          description: >
+            unique identifier of the referenced vault
+          type: string
+    SecretUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Secret
+          type: string
+        name:
+          description: >
+            Name of secret
+          type: string
+        value:
+          description: >
+            Value of secret
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Secret
+          type: string
+        description:
+          description: >
+            description of Secret
+          type: string
+    Secret:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Secret
+          type: string
+        uri:
+          description: >
+            URI of this Secret API resource
+          type: string
+        created_at:
+          description: >
+            Timestamp when the Secret was created (RFC 3339 format)
+          type: string
+        updated_at:
+          description: >
+            Timestamp when the Secret was last updated (RFC 3339 format)
+          type: string
+        name:
+          description: >
+            Name of secret
+          type: string
+        description:
+          description: >
+            description of Secret
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Secret
+          type: string
+        created_by:
+          description: >
+            Reference to who created this Secret
+          $ref: "#/components/schemas/Ref"
+        last_updated_by:
+          description: >
+            Reference to who created this Secret
+          $ref: "#/components/schemas/Ref"
+        vault:
+          description: >
+            Reference to the vault the secret is stored in
+          $ref: "#/components/schemas/Ref"
+    SecretList:
+      type: object
+      properties:
+        secrets:
+          description: >
+            The list of Secrets for this account
+          type: array
+          items:
+            $ref: "#/components/schemas/Secret"
+        uri:
+          description: n/a
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page of results, or null if there is no next page
+          type: string
     SSHCertificateAuthorityCreate:
       type: object
       properties:
@@ -11050,4 +11387,93 @@ components:
         next_page_uri:
           description: >
             URI of the next page, or null if there is no next page
+          type: string
+    VaultCreate:
+      type: object
+      properties:
+        name:
+          description: >
+            Name of vault
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Vault
+          type: string
+        description:
+          description: >
+            description of Vault
+          type: string
+    VaultUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Vault
+          type: string
+        name:
+          description: >
+            Name of vault
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Vault
+          type: string
+        description:
+          description: >
+            description of Vault
+          type: string
+    Vault:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Vault
+          type: string
+        uri:
+          description: >
+            URI of this Vault API resource
+          type: string
+        created_at:
+          description: >
+            Timestamp when the Vault was created (RFC 3339 format)
+          type: string
+        updated_at:
+          description: >
+            Timestamp when the Vault was last updated (RFC 3339 format)
+          type: string
+        name:
+          description: >
+            Name of vault
+          type: string
+        description:
+          description: >
+            description of Vault
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Vault
+          type: string
+        created_by:
+          description: >
+            Reference to who created this Vault
+          type: string
+        last_updated_by:
+          description: >
+            Reference to who created this Vault
+          type: string
+    VaultList:
+      type: object
+      properties:
+        vaults:
+          description: >
+            The list of Vaults for this account
+          type: array
+          items:
+            $ref: "#/components/schemas/Vault"
+        uri:
+          description: n/a
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page of results, or null if there is no next page
           type: string
