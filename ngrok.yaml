@@ -5598,21 +5598,6 @@ components:
         limit:
           description: n/a
           type: string
-    Error:
-      type: object
-      properties:
-        error_code:
-          description: n/a
-          type: string
-        status_code:
-          description: n/a
-          type: integer
-        msg:
-          description: n/a
-          type: string
-        details:
-          description: n/a
-          type: object
     Ref:
       type: object
       properties:
@@ -5624,12 +5609,6 @@ components:
           description: >
             a uri for locating a resource
           type: string
-    DateTime:
-      type: object
-    DurationSeconds:
-      type: object
-    URI:
-      type: object
     AbuseReport:
       type: object
       properties:
@@ -6151,46 +6130,6 @@ components:
           description: >
             URI to the API resource of the tunnel session
           type: string
-    AgentVersionDeprecated:
-      type: object
-      properties:
-        next_min:
-          description: n/a
-          type: string
-        next_date:
-          description: n/a
-          type: string
-        msg:
-          description: n/a
-          type: string
-    TunnelSessionUserAgent:
-      type: object
-      description: >
-        The User-Agent for a tunnel session
-      properties:
-        products:
-          description: >
-            The list of products making up the User-Agent
-          type: array
-          items:
-            $ref: "#/components/schemas/TunnelSessionProduct"
-    TunnelSessionProduct:
-      type: object
-      description: >
-        A product entry in a tunnel session User-Agent
-      properties:
-        name:
-          description: >
-            The product name
-          type: string
-        version:
-          description: >
-            The product version
-          type: string
-        comment:
-          description: >
-            An optional comment
-          type: string
     TunnelSessionList:
       type: object
       properties:
@@ -6212,182 +6151,6 @@ components:
       type: object
       properties:
         id:
-          description: n/a
-          type: string
-    AuditEventDashLogin:
-      type: object
-      properties:
-        account_id:
-          description: n/a
-          type: string
-        user_id:
-          description: n/a
-          type: string
-        remote_addr:
-          description: n/a
-          type: string
-        email:
-          description: n/a
-          type: string
-    AuditEventEndpoint:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        account_id:
-          description: n/a
-          type: string
-        region:
-          description: n/a
-          type: string
-        ingress_region:
-          description: n/a
-          type: string
-        created_at:
-          description: n/a
-          type: string
-        updated_at:
-          description: n/a
-          type: string
-        url:
-          description: n/a
-          type: string
-        proto:
-          description: n/a
-          type: string
-        domain_id:
-          description: n/a
-          type: string
-        tcp_addr_id:
-          description: n/a
-          type: string
-        rank:
-          description: n/a
-          type: integer
-        static_tunnel_id:
-          description: n/a
-          type: string
-        static_tunnel_region:
-          description: n/a
-          type: string
-        static_tunnel_session_id:
-          description: n/a
-          type: string
-        edge_id:
-          description: n/a
-          type: string
-        type:
-          description: n/a
-          type: string
-    AuditEventTunnelSession:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        remote_addr:
-          description: n/a
-          type: string
-        created_at:
-          description: n/a
-          type: string
-        agent_version:
-          description: n/a
-          type: string
-        transport:
-          description: n/a
-          type: string
-        os:
-          description: n/a
-          type: string
-        arch:
-          description: n/a
-          type: string
-        region_id:
-          description: n/a
-          type: string
-        cred_id:
-          description: n/a
-          type: string
-        ssh_cred_id:
-          description: n/a
-          type: string
-        agent_ingress_hostname:
-          description: n/a
-          type: string
-        proxy_type:
-          description: n/a
-          type: string
-        mutual_tls:
-          description: n/a
-          type: boolean
-        service_run:
-          description: n/a
-          type: boolean
-        config_version:
-          description: n/a
-          type: string
-        custom_cas:
-          description: n/a
-          type: boolean
-        client_type:
-          description: n/a
-          type: string
-        user_agent:
-          description: n/a
-          $ref: "#/components/schemas/TunnelSessionUserAgent"
-        deprecated:
-          description: n/a
-          $ref: "#/components/schemas/AgentVersionDeprecated"
-    AuditEventTunnel:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        created_at:
-          description: n/a
-          type: string
-        deleted_at:
-          description: n/a
-          type: string
-        account_id:
-          description: n/a
-          type: string
-        session_id:
-          description: n/a
-          type: string
-        remote_addr:
-          description: n/a
-          type: string
-        region_id:
-          description: n/a
-          type: string
-        agent_version:
-          description: n/a
-          type: string
-        forwards_to:
-          description: n/a
-          type: string
-        endpoint_id:
-          description: n/a
-          type: string
-        labels:
-          description: n/a
-          type: object
-        backend_ids:
-          description: n/a
-          type: array
-          items:
-            type: string
-        hostname:
-          description: n/a
-          type: string
-        port:
-          description: n/a
-          type: integer
-        proto:
           description: n/a
           type: string
     FailoverBackend:
@@ -7085,220 +6848,6 @@ components:
           description: >
             URI of the next page, or null if there is no next page
           type: string
-    EndpointConfiguration:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier of this endpoint configuration
-          type: string
-        type:
-          description: >
-            they type of traffic this endpoint configuration can be applied to. one of: `http`, `https`, `tcp`
-          type: string
-        description:
-          description: >
-            human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes.
-          type: string
-        created_at:
-          description: >
-            timestamp when the endpoint configuration was created, RFC 3339 format
-          type: string
-        uri:
-          description: >
-            URI of the endpoint configuration API resource
-          type: string
-        circuit_breaker:
-          description: >
-            circuit breaker module configuration or `null`
-          $ref: "#/components/schemas/EndpointCircuitBreaker"
-        compression:
-          description: >
-            compression module configuration or `null`
-          $ref: "#/components/schemas/EndpointCompression"
-        request_headers:
-          description: >
-            request headers module configuration or `null`
-          $ref: "#/components/schemas/EndpointRequestHeaders"
-        response_headers:
-          description: >
-            response headers module configuration or `null`
-          $ref: "#/components/schemas/EndpointResponseHeaders"
-        ip_policy:
-          description: >
-            ip policy module configuration or `null`
-          $ref: "#/components/schemas/EndpointIPPolicy"
-        mutual_tls:
-          description: >
-            mutual TLS module configuration or `null`
-          $ref: "#/components/schemas/EndpointMutualTLS"
-        tls_termination:
-          description: >
-            TLS termination module configuration or `null`
-          $ref: "#/components/schemas/EndpointTLSTermination"
-        webhook_validation:
-          description: >
-            webhook validation module configuration or `null`
-          $ref: "#/components/schemas/EndpointWebhookValidation"
-        oauth:
-          description: >
-            oauth module configuration or `null`
-          $ref: "#/components/schemas/EndpointOAuth"
-        saml:
-          description: >
-            saml module configuration or `null`
-          $ref: "#/components/schemas/EndpointSAML"
-        oidc:
-          description: >
-            oidc module configuration or `null`
-          $ref: "#/components/schemas/EndpointOIDC"
-    EndpointConfigurationList:
-      type: object
-      properties:
-        endpoint_configurations:
-          description: >
-            the list of all endpoint configurations on this account
-          type: array
-          items:
-            $ref: "#/components/schemas/EndpointConfiguration"
-        uri:
-          description: >
-            URI of the endpoint configurations list API resource
-          type: string
-        next_page_uri:
-          description: >
-            URI of the next page, or null if there is no next page
-          type: string
-    EndpointConfigurationUpdate:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier of this endpoint configuration
-          type: string
-        description:
-          description: >
-            human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes.
-          type: string
-        circuit_breaker:
-          description: >
-            circuit breaker module configuration or `null`
-          $ref: "#/components/schemas/EndpointCircuitBreaker"
-        compression:
-          description: >
-            compression module configuration or `null`
-          $ref: "#/components/schemas/EndpointCompression"
-        request_headers:
-          description: >
-            request headers module configuration or `null`
-          $ref: "#/components/schemas/EndpointRequestHeaders"
-        response_headers:
-          description: >
-            response headers module configuration or `null`
-          $ref: "#/components/schemas/EndpointResponseHeaders"
-        ip_policy:
-          description: >
-            ip policy module configuration or `null`
-          $ref: "#/components/schemas/EndpointIPPolicyMutate"
-        mutual_tls:
-          description: >
-            mutual TLS module configuration or `null`
-          $ref: "#/components/schemas/EndpointMutualTLSMutate"
-        tls_termination:
-          description: >
-            TLS termination module configuration or `null`
-          $ref: "#/components/schemas/EndpointTLSTermination"
-        webhook_validation:
-          description: >
-            webhook validation module configuration or `null`
-          $ref: "#/components/schemas/EndpointWebhookValidation"
-        oauth:
-          description: >
-            oauth module configuration or `null`
-          $ref: "#/components/schemas/EndpointOAuth"
-        saml:
-          description: >
-            saml module configuration or `null`
-          $ref: "#/components/schemas/EndpointSAMLMutate"
-        oidc:
-          description: >
-            oidc module configuration or `null`
-          $ref: "#/components/schemas/EndpointOIDC"
-        backend:
-          description: >
-            backend module configuration or `null`
-          $ref: "#/components/schemas/EndpointBackendMutate"
-    EndpointConfigurationCreate:
-      type: object
-      properties:
-        type:
-          description: >
-            they type of traffic this endpoint configuration can be applied to. one of: `http`, `https`, `tcp`
-          type: string
-        description:
-          description: >
-            human-readable description of what this endpoint configuration will be do when applied or what traffic it will be applied to. Optional, max 255 bytes
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined machine-readable data of this endpoint configuration. Optional, max 4096 bytes.
-          type: string
-        circuit_breaker:
-          description: >
-            circuit breaker module configuration or `null`
-          $ref: "#/components/schemas/EndpointCircuitBreaker"
-        compression:
-          description: >
-            compression module configuration or `null`
-          $ref: "#/components/schemas/EndpointCompression"
-        request_headers:
-          description: >
-            request headers module configuration or `null`
-          $ref: "#/components/schemas/EndpointRequestHeaders"
-        response_headers:
-          description: >
-            response headers module configuration or `null`
-          $ref: "#/components/schemas/EndpointResponseHeaders"
-        ip_policy:
-          description: >
-            ip policy module configuration or `null`
-          $ref: "#/components/schemas/EndpointIPPolicyMutate"
-        mutual_tls:
-          description: >
-            mutual TLS module configuration or `null`
-          $ref: "#/components/schemas/EndpointMutualTLSMutate"
-        tls_termination:
-          description: >
-            TLS termination module configuration or `null`
-          $ref: "#/components/schemas/EndpointTLSTermination"
-        webhook_validation:
-          description: >
-            webhook validation module configuration or `null`
-          $ref: "#/components/schemas/EndpointWebhookValidation"
-        oauth:
-          description: >
-            oauth module configuration or `null`
-          $ref: "#/components/schemas/EndpointOAuth"
-        saml:
-          description: >
-            saml module configuration or `null`
-          $ref: "#/components/schemas/EndpointSAMLMutate"
-        oidc:
-          description: >
-            oidc module configuration or `null`
-          $ref: "#/components/schemas/EndpointOIDC"
-        backend:
-          description: >
-            backend module configuration or `null`
-          $ref: "#/components/schemas/EndpointBackendMutate"
     EndpointWebhookValidation:
       type: object
       properties:
@@ -7373,25 +6922,6 @@ components:
           description: >
             The minimum TLS version used for termination and advertised to the client during the TLS handshake. if unspecified, ngrok will choose an industry-safe default. This value must be null if `terminate_at` is set to `upstream`.
           type: string
-    EndpointBasicAuth:
-      type: object
-      properties:
-        enabled:
-          description: >
-            `true` if the module will be applied to traffic, `false` to disable. default `true` if unspecified
-          type: boolean
-        auth_provider_id:
-          description: >
-            determines how the basic auth credentials are validated. Currently only the value `agent` is supported which means that credentials will be validated against the username and password specified by the ngrok agent's `--basic-auth` flag, if any.
-          type: string
-        realm:
-          description: >
-            an arbitrary string to be specified in as the 'realm' value in the `WWW-Authenticate` header. default is `ngrok`
-          type: string
-        allow_options:
-          description: >
-            true or false indicating whether to allow OPTIONS requests through without authentication which is necessary for CORS. default is `false`
-          type: boolean
     EndpointRequestHeaders:
       type: object
       properties:
@@ -7965,12 +7495,6 @@ components:
           type: array
           items:
             type: string
-    EndpointPolicy:
-      type: object
-    EndpointRule:
-      type: object
-    EndpointAction:
-      type: object
     EndpointTrafficPolicy:
       type: object
       properties:
@@ -8390,15 +7914,6 @@ components:
         module:
           description: n/a
           $ref: "#/components/schemas/EndpointTLSTerminationAtEdge"
-    EdgePolicyReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointPolicy"
     EdgeTrafficPolicyReplace:
       type: object
       properties:
@@ -8552,18 +8067,6 @@ components:
         module:
           description: n/a
           $ref: "#/components/schemas/EndpointUserAgentFilter"
-    EdgeRoutePolicyReplace:
-      type: object
-      properties:
-        edge_id:
-          description: n/a
-          type: string
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointPolicy"
     EdgeRouteTrafficPolicyReplace:
       type: object
       properties:
@@ -8900,7 +8403,7 @@ components:
           description: >
             the local address the tunnel forwards to
           type: string
-        upstream_proto:
+        upstream_protocol:
           description: >
             the protocol the agent uses to forward with
           type: string
@@ -8911,10 +8414,6 @@ components:
         principal:
           description: >
             The ID of the owner (bot or user) that owns this endpoint
-          $ref: "#/components/schemas/Ref"
-        principal_id:
-          description: >
-            TODO: deprecate me!
           $ref: "#/components/schemas/Ref"
         traffic_policy:
           description: >
@@ -8938,6 +8437,10 @@ components:
           description: >
             user supplied name for the endpoint
           type: string
+        pooling_enabled:
+          description: >
+            whether the endpoint allows pooling
+          type: boolean
     EndpointList:
       type: object
       properties:
@@ -8957,6 +8460,10 @@ components:
           type: string
     EndpointCreate:
       type: object
+      required:
+      - url
+      - type
+      - traffic_policy
       properties:
         url:
           description: >
@@ -8964,7 +8471,7 @@ components:
           type: string
         type:
           description: >
-            whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)`
+            Type of endpoint. Only 'cloud' is currently supported (represents a cloud endpoint). Defaults to 'cloud' if not specified.
           type: string
         traffic_policy:
           description: >
@@ -8984,6 +8491,9 @@ components:
           type: array
           items:
             type: string
+        pooling_enabled:
+          description: n/a
+          type: boolean
     EndpointUpdate:
       type: object
       properties:
@@ -9013,88 +8523,9 @@ components:
           type: array
           items:
             type: string
-    AgentSessionEvent:
-      type: object
-      properties:
-        session:
-          description: >
-            a reference to the session to which this event corresponds
-          $ref: "#/components/schemas/Ref"
-        credential:
-          description: >
-            a reference to the credential used to authenticate this session
-          $ref: "#/components/schemas/Ref"
-        agent_ip:
-          description: >
-            the ip address from which the agent is connecting
-          type: string
-        ingress_server_ip:
-          description: >
-            the ip address of the ingress server to which the agent is connecting
-          type: string
-        region:
-          description: >
-            the region of the tunnel server
-          type: string
-        ingress_hostname:
-          description: >
-            the hostname of the tunnel server
-          type: string
-        user_agent:
-          description: >
-            the user agent provided to the tunnel server by the agent
-          type: string
-        metadata:
-          description: >
-            the session metadata provided by the agent on connection
-          type: string
-        os:
-          description: >
-            the operating system of the machine on which the agent is running
-          type: string
-        arch:
-          description: >
-            the CPU architecture of the machine on which the agent is running
-          type: string
-        transport:
-          description: >
-            the transport protocol used internally by the agent "muxado" for agents and agent libraries, "ssh" for reverse SSH tunnels
-          type: string
-        started_at:
-          description: >
-            the time at which the session started
-          type: string
-        expires_at:
-          description: >
-            the time at which the session expires
-          type: string
-        stopped_at:
-          description: >
-            the time at which the session stopped
-          type: string
-        deprecated:
-          description: >
-            If the current agent version is deprecated, informs when support will be dropped and the next minimum supported version
-          $ref: "#/components/schemas/AgentDeprecated"
-        error:
-          description: >
-            on a failed session start, an explanation of the failure on a successful session start, the empty string on a session stop, the reason for the session stop
-          type: string
-    AgentDeprecated:
-      type: object
-      properties:
-        upcoming_minimum_version:
-          description: >
-            the upcoming minimum supported agent version
-          type: string
-        upcoming_enforcement_date:
-          description: >
-            the date by which the current agent must be upgraded to the upcoming minimum version
-          type: string
-        message:
-          description: >
-            additional information about the agent deprecation
-          type: string
+        pooling_enabled:
+          description: n/a
+          type: boolean
     EventDestinationCreate:
       type: object
       properties:
@@ -9240,35 +8671,6 @@ components:
           description: >
             An Amazon Resource Name specifying the CloudWatch Logs group to deposit events into.
           type: string
-    EventTargetS3:
-      type: object
-      properties:
-        auth:
-          description: >
-            Configuration for how to authenticate into your AWS account. Exactly one of `role` or `creds` should be configured.
-          $ref: "#/components/schemas/AWSAuth"
-        bucket_arn:
-          description: >
-            An Amazon Resource Name specifying the S3 bucket to deposit events into.
-          type: string
-        object_prefix:
-          description: >
-            An optional prefix to prepend to S3 object keys.
-          type: string
-        compression:
-          description: >
-            Whether or not to compress files with gzip.
-          type: boolean
-        max_file_size:
-          description: >
-            How many bytes we should accumulate into a single file before sending to S3.
-          type: integer
-        max_file_age:
-          description: >
-            How many seconds we should batch up events before sending them to S3.
-          type: integer
-    EventTargetDebug:
-      type: object
     EventTargetDatadog:
       type: object
       properties:
@@ -9355,12 +8757,6 @@ components:
         aws_secret_access_key:
           description: >
             The secret portion of an AWS access key.
-          type: string
-    SentEvent:
-      type: object
-      properties:
-        event_id:
-          description: n/a
           type: string
     EventSubscriptionCreate:
       type: object
@@ -9807,339 +9203,6 @@ components:
           description: >
             URI of the next page, or null if there is no next page
           type: string
-    KubernetesOperatorCreate:
-      type: object
-      properties:
-        description:
-          description: >
-            human-readable description of this Kubernetes Operator. optional, max 255 bytes.
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined machine-readable data of this Kubernetes Operator. optional, max 4096 bytes.
-          type: string
-        enabled_features:
-          description: >
-            features enabled for this Kubernetes Operator. a subset of {"bindings", "ingress", and "gateway"}
-          type: array
-          items:
-            type: string
-        region:
-          description: >
-            the ngrok region in which the ingress for this operator is served. defaults to "global"
-          type: string
-        deployment:
-          description: >
-            information about the deployment of this Kubernetes Operator
-          $ref: "#/components/schemas/KubernetesOperatorDeployment"
-        binding:
-          description: >
-            configuration for the Bindings feature of this Kubernetes Operator. set only if enabling the "bindings" feature
-          $ref: "#/components/schemas/KubernetesOperatorBindingCreate"
-    KubernetesOperatorBindingCreate:
-      type: object
-      properties:
-        name:
-          description: >
-            the name by which endpoints can be bound to this Kubernetes Operator. starts with "k8s/"
-          type: string
-        allowed_urls:
-          description: >
-            the regexes for urls allowed to be bound to this operator
-          type: array
-          items:
-            type: string
-        csr:
-          description: >
-            CSR is supplied during initial creation to enable creating a mutual TLS secured connection between ngrok and the operator. This is an internal implementation detail and subject to change.
-          type: string
-        ingress_endpoint:
-          description: >
-            the public ingress endpoint for this Kubernetes Operator
-          type: string
-    KubernetesOperatorUpdate:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier for this Kubernetes Operator
-          type: string
-        description:
-          description: >
-            human-readable description of this Kubernetes Operator. optional, max 255 bytes.
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined machine-readable data of this Kubernetes Operator. optional, max 4096 bytes.
-          type: string
-        enabled_features:
-          description: >
-            features enabled for this Kubernetes Operator. a subset of {"bindings", "ingress", and "gateway"}
-          type: array
-          items:
-            type: string
-        region:
-          description: >
-            the ngrok region in which the ingress for this operator is served. defaults to "global"
-          type: string
-        binding:
-          description: >
-            configuration for the Bindings feature of this Kubernetes Operator. set only if enabling the "bindings" feature
-          $ref: "#/components/schemas/KubernetesOperatorBindingUpdate"
-    KubernetesOperatorBindingUpdate:
-      type: object
-      properties:
-        name:
-          description: >
-            the name by which endpoints can be bound to this Kubernetes Operator. starts with "k8s/"
-          type: string
-        allowed_urls:
-          description: >
-            the regexes for urls allowed to be bound to this operator
-          type: array
-          items:
-            type: string
-        csr:
-          description: >
-            CSR is supplied during initial creation to enable creating a mutual TLS secured connection between ngrok and the operator. This is an internal implementation detail and subject to change.
-          type: string
-        ingress_endpoint:
-          description: >
-            the public ingress endpoint for this Kubernetes Operator
-          type: string
-    KubernetesOperator:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier for this Kubernetes Operator
-          type: string
-        uri:
-          description: >
-            URI of this Kubernetes Operator API resource
-          type: string
-        created_at:
-          description: >
-            timestamp when the Kubernetes Operator was created. RFC 3339 format
-          type: string
-        updated_at:
-          description: >
-            timestamp when the Kubernetes Operator was last updated. RFC 3339 format
-          type: string
-        description:
-          description: >
-            human-readable description of this Kubernetes Operator. optional, max 255 bytes.
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined machine-readable data of this Kubernetes Operator. optional, max 4096 bytes.
-          type: string
-        principal:
-          description: >
-            the principal who created this Kubernetes Operator
-          $ref: "#/components/schemas/Ref"
-        enabled_features:
-          description: >
-            features enabled for this Kubernetes Operator. a subset of {"bindings", "ingress", and "gateway"}
-          type: array
-          items:
-            type: string
-        region:
-          description: >
-            the ngrok region in which the ingress for this operator is served. defaults to "global"
-          type: string
-        deployment:
-          description: >
-            information about the deployment of this Kubernetes Operator
-          $ref: "#/components/schemas/KubernetesOperatorDeployment"
-        binding:
-          description: >
-            information about the Bindings feature of this Kubernetes Operator, if enabled
-          $ref: "#/components/schemas/KubernetesOperatorBinding"
-    KubernetesOperatorDeployment:
-      type: object
-      properties:
-        name:
-          description: >
-            the deployment name
-          type: string
-        namespace:
-          description: >
-            the namespace this Kubernetes Operator is deployed to
-          type: string
-        version:
-          description: >
-            the version of this Kubernetes Operator
-          type: string
-    KubernetesOperatorCert:
-      type: object
-      properties:
-        cert:
-          description: >
-            the public client certificate generated for this Kubernetes Operator from the CSR supplied when enabling the Bindings feature
-          type: string
-        not_before:
-          description: >
-            timestamp when the certificate becomes valid. RFC 3339 format
-          type: string
-        not_after:
-          description: >
-            timestamp when the certificate becomes invalid. RFC 3339 format
-          type: string
-    KubernetesOperatorBinding:
-      type: object
-      properties:
-        name:
-          description: >
-            the name by which endpoints can be bound to this Kubernetes Operator. starts with "k8s/"
-          type: string
-        allowed_urls:
-          description: >
-            the regexes for urls allowed to be bound to this operator
-          type: array
-          items:
-            type: string
-        cert:
-          description: >
-            the binding certificate information
-          $ref: "#/components/schemas/KubernetesOperatorCert"
-        ingress_endpoint:
-          description: >
-            the public ingress endpoint for this Kubernetes Operator
-          type: string
-    KubernetesOperatorList:
-      type: object
-      properties:
-        operators:
-          description: >
-            the list of Kubernetes Operators for this account
-          type: array
-          items:
-            $ref: "#/components/schemas/KubernetesOperator"
-        uri:
-          description: n/a
-          type: string
-        next_page_uri:
-          description: >
-            URI of the next page, or null if there is no next page
-          type: string
-    EndpointBasicAuthReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointBasicAuth"
-    EndpointCircuitBreakerReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointCircuitBreaker"
-    EndpointCompressionReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointCompression"
-    EndpointTLSTerminationReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointTLSTermination"
-    EndpointIPPolicyReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointIPPolicyMutate"
-    EndpointMutualTLSReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointMutualTLSMutate"
-    EndpointRequestHeadersReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointRequestHeaders"
-    EndpointResponseHeadersReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointResponseHeaders"
-    EndpointOAuthReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointOAuth"
-    EndpointWebhookValidationReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointWebhookValidation"
-    EndpointSAMLReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointSAMLMutate"
-    EndpointOIDCReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointOIDC"
-    EndpointBackendReplace:
-      type: object
-      properties:
-        id:
-          description: n/a
-          type: string
-        module:
-          description: n/a
-          $ref: "#/components/schemas/EndpointBackendMutate"
     ReservedAddrCreate:
       type: object
       properties:
@@ -10375,15 +9438,6 @@ components:
           description: >
             timestamp when the provisioning job will be retried
           type: string
-    RootResponse:
-      type: object
-      properties:
-        uri:
-          description: n/a
-          type: string
-        subresource_uris:
-          description: n/a
-          type: object
     SSHCertificateAuthorityCreate:
       type: object
       properties:
