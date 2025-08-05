@@ -4903,6 +4903,130 @@ paths:
         204:
           description: >
             Detach the certificate management policy attached to a reserved domain.
+  /vault_secrets:
+    post:
+      summary: Create
+      description: >
+        Create a new Secret
+      tags:
+        - Secrets
+      operationId: SecretsCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SecretCreate"
+      responses:
+        201:
+          description: >
+            Create a new Secret
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Secret"
+    get:
+      summary: List
+      description: >
+        List all Secrets owned by account
+      tags:
+        - Secrets
+      operationId: SecretsList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List all Secrets owned by account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecretList"
+  /vault_secrets/{id}:
+    patch:
+      summary: Update
+      description: >
+        Update an existing Secret by ID
+      tags:
+        - Secrets
+      operationId: SecretsUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            identifier for Secret
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/SecretUpdate"
+      responses:
+        200:
+          description: >
+            Update an existing Secret by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Secret"
+    delete:
+      summary: Delete
+      description: >
+        Delete a Secret
+      tags:
+        - Secrets
+      operationId: SecretsDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete a Secret
+    get:
+      summary: Get
+      description: >
+        Get a Secret by ID
+      tags:
+        - Secrets
+      operationId: SecretsGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get a Secret by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Secret"
   /ssh_certificate_authorities:
     post:
       summary: Create
@@ -5566,6 +5690,130 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Tunnel"
+  /vaults:
+    post:
+      summary: Create
+      description: >
+        Create a new Vault
+      tags:
+        - Vaults
+      operationId: VaultsCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VaultCreate"
+      responses:
+        201:
+          description: >
+            Create a new Vault
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vault"
+    get:
+      summary: List
+      description: >
+        List all Vaults owned by account
+      tags:
+        - Vaults
+      operationId: VaultsList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List all Vaults owned by account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/VaultList"
+  /vaults/{id}:
+    patch:
+      summary: Update
+      description: >
+        Update an existing Vault by ID
+      tags:
+        - Vaults
+      operationId: VaultsUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            identifier for Vault
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/VaultUpdate"
+      responses:
+        200:
+          description: >
+            Update an existing Vault by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vault"
+    delete:
+      summary: Delete
+      description: >
+        Delete a Vault
+      tags:
+        - Vaults
+      operationId: VaultsDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete a Vault
+    get:
+      summary: Get
+      description: >
+        Get a Vault by ID
+      tags:
+        - Vaults
+      operationId: VaultsGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get a Vault by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Vault"
 components:
   securitySchemes:
     authentication:
@@ -9438,6 +9686,113 @@ components:
           description: >
             timestamp when the provisioning job will be retried
           type: string
+    SecretCreate:
+      type: object
+      required:
+      - vault_id
+      properties:
+        name:
+          description: >
+            Name of secret
+          type: string
+        value:
+          description: >
+            Value of secret
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Secret
+          type: string
+        description:
+          description: >
+            description of Secret
+          type: string
+        vault_id:
+          description: >
+            unique identifier of the referenced vault
+          type: string
+    SecretUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Secret
+          type: string
+        name:
+          description: >
+            Name of secret
+          type: string
+        value:
+          description: >
+            Value of secret
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Secret
+          type: string
+        description:
+          description: >
+            description of Secret
+          type: string
+    Secret:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Secret
+          type: string
+        uri:
+          description: >
+            URI of this Secret API resource
+          type: string
+        created_at:
+          description: >
+            Timestamp when the Secret was created (RFC 3339 format)
+          type: string
+        updated_at:
+          description: >
+            Timestamp when the Secret was last updated (RFC 3339 format)
+          type: string
+        name:
+          description: >
+            Name of secret
+          type: string
+        description:
+          description: >
+            description of Secret
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Secret
+          type: string
+        created_by:
+          description: >
+            Reference to who created this Secret
+          $ref: "#/components/schemas/Ref"
+        last_updated_by:
+          description: >
+            Reference to who created this Secret
+          $ref: "#/components/schemas/Ref"
+        vault:
+          description: >
+            Reference to the vault the secret is stored in
+          $ref: "#/components/schemas/Ref"
+    SecretList:
+      type: object
+      properties:
+        secrets:
+          description: >
+            The list of Secrets for this account
+          type: array
+          items:
+            $ref: "#/components/schemas/Secret"
+        uri:
+          description: n/a
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page of results, or null if there is no next page
+          type: string
     SSHCertificateAuthorityCreate:
       type: object
       properties:
@@ -10104,4 +10459,93 @@ components:
         next_page_uri:
           description: >
             URI of the next page, or null if there is no next page
+          type: string
+    VaultCreate:
+      type: object
+      properties:
+        name:
+          description: >
+            Name of vault
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Vault
+          type: string
+        description:
+          description: >
+            description of Vault
+          type: string
+    VaultUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Vault
+          type: string
+        name:
+          description: >
+            Name of vault
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Vault
+          type: string
+        description:
+          description: >
+            description of Vault
+          type: string
+    Vault:
+      type: object
+      properties:
+        id:
+          description: >
+            identifier for Vault
+          type: string
+        uri:
+          description: >
+            URI of this Vault API resource
+          type: string
+        created_at:
+          description: >
+            Timestamp when the Vault was created (RFC 3339 format)
+          type: string
+        updated_at:
+          description: >
+            Timestamp when the Vault was last updated (RFC 3339 format)
+          type: string
+        name:
+          description: >
+            Name of vault
+          type: string
+        description:
+          description: >
+            description of Vault
+          type: string
+        metadata:
+          description: >
+            Arbitrary user-defined metadata for this Vault
+          type: string
+        created_by:
+          description: >
+            Reference to who created this Vault
+          type: string
+        last_updated_by:
+          description: >
+            Reference to who created this Vault
+          type: string
+    VaultList:
+      type: object
+      properties:
+        vaults:
+          description: >
+            The list of Vaults for this account
+          type: array
+          items:
+            $ref: "#/components/schemas/Vault"
+        uri:
+          description: n/a
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page of results, or null if there is no next page
           type: string
