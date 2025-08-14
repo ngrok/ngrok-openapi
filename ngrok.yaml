@@ -3772,6 +3772,16 @@ paths:
           required: false
           schema:
             type: string
+        - name: ids
+          in: query
+          required: false
+          schema:
+            type: array
+        - name: urls
+          in: query
+          required: false
+          schema:
+            type: array
       responses:
         200:
           description: >
@@ -8679,7 +8689,7 @@ components:
           $ref: "#/components/schemas/Ref"
         uri:
           description: >
-            URI of the clep API resource
+            URI of the Cloud Endpoint API resource
           type: string
         name:
           description: >
@@ -8742,6 +8752,25 @@ components:
         pooling_enabled:
           description: n/a
           type: boolean
+    EndpointListArgs:
+      type: object
+      properties:
+        before_id:
+          description: n/a
+          type: string
+        limit:
+          description: n/a
+          type: string
+        ids:
+          description: n/a
+          type: array
+          items:
+            type: string
+        urls:
+          description: n/a
+          type: array
+          items:
+            type: string
     EndpointUpdate:
       type: object
       properties:
