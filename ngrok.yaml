@@ -3772,12 +3772,12 @@ paths:
           required: false
           schema:
             type: string
-        - name: ids
+        - name: id
           in: query
           required: false
           schema:
             type: array
-        - name: urls
+        - name: url
           in: query
           required: false
           schema:
@@ -5824,6 +5824,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Vault"
+  /vaults/{id}/secrets:
+    get:
+      summary: GetSecretsByVault
+      description: >
+        Get Secrets by Vault ID
+      tags:
+        - Vaults
+      operationId: VaultsGetSecretsByVault
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get Secrets by Vault ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecretList"
 components:
   securitySchemes:
     authentication:
@@ -5850,6 +5885,19 @@ components:
     Paging:
       type: object
       properties:
+        before_id:
+          description: n/a
+          type: string
+        limit:
+          description: n/a
+          type: string
+    ItemPaging:
+      type: object
+      properties:
+        id:
+          description: >
+            a resource identifier
+          type: string
         before_id:
           description: n/a
           type: string
@@ -8761,12 +8809,12 @@ components:
         limit:
           description: n/a
           type: string
-        ids:
+        id:
           description: n/a
           type: array
           items:
             type: string
-        urls:
+        url:
           description: n/a
           type: array
           items:
