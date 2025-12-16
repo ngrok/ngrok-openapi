@@ -99,6 +99,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -217,6 +222,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -463,6 +473,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -1335,6 +1350,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -1367,7 +1387,7 @@ paths:
     get:
       summary: Get
       description: >
-        Get detailed information about a certficate authority
+        Get detailed information about a certificate authority
       tags:
         - CertificateAuthorities
       operationId: CertificateAuthoritiesGet
@@ -1383,7 +1403,7 @@ paths:
       responses:
         200:
           description: >
-            Get detailed information about a certficate authority
+            Get detailed information about a certificate authority
           content:
             application/json:
               schema:
@@ -1453,6 +1473,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -3772,16 +3797,21 @@ paths:
           required: false
           schema:
             type: string
-        - name: ids
+        - name: id
           in: query
           required: false
           schema:
             type: array
-        - name: urls
+        - name: url
           in: query
           required: false
           schema:
             type: array
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -3906,6 +3936,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -4026,6 +4061,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -4303,6 +4343,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -4421,6 +4466,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -4547,6 +4597,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -4669,6 +4724,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -4787,6 +4847,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -4955,6 +5020,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -5037,6 +5107,133 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Secret"
+  /service_users:
+    post:
+      summary: Create
+      description: >
+        Create a new service user
+      tags:
+        - ServiceUsers
+      operationId: ServiceUsersCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceUserCreate"
+      responses:
+        201:
+          description: >
+            Create a new service user
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceUser"
+    get:
+      summary: List
+      description: >
+        List all service users in this account.
+      tags:
+        - ServiceUsers
+      operationId: ServiceUsersList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List all service users in this account.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceUserList"
+  /service_users/{id}:
+    delete:
+      summary: Delete
+      description: >
+        Delete a service user by ID
+      tags:
+        - ServiceUsers
+      operationId: ServiceUsersDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete a service user by ID
+    get:
+      summary: Get
+      description: >
+        Get the details of a Bot User by ID.
+      tags:
+        - ServiceUsers
+      operationId: ServiceUsersGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get the details of a Bot User by ID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceUser"
+    patch:
+      summary: Update
+      description: >
+        Update attributes of a service user by ID.
+      tags:
+        - ServiceUsers
+      operationId: ServiceUsersUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ServiceUserUpdate"
+      responses:
+        200:
+          description: >
+            Update attributes of a service user by ID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ServiceUser"
   /ssh_certificate_authorities:
     post:
       summary: Create
@@ -5079,6 +5276,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -5111,7 +5313,7 @@ paths:
     get:
       summary: Get
       description: >
-        Get detailed information about an SSH Certficate Authority
+        Get detailed information about an SSH Certificate Authority
       tags:
         - SSHCertificateAuthorities
       operationId: SshCertificateAuthoritiesGet
@@ -5127,7 +5329,7 @@ paths:
       responses:
         200:
           description: >
-            Get detailed information about an SSH Certficate Authority
+            Get detailed information about an SSH Certificate Authority
           content:
             application/json:
               schema:
@@ -5197,6 +5399,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -5355,7 +5562,7 @@ paths:
     get:
       summary: Get
       description: >
-        Get detailed information about an SSH Host Certficate
+        Get detailed information about an SSH Host Certificate
       tags:
         - SSHHostCertificates
       operationId: SshHostCertificatesGet
@@ -5371,7 +5578,7 @@ paths:
       responses:
         200:
           description: >
-            Get detailed information about an SSH Host Certficate
+            Get detailed information about an SSH Host Certificate
           content:
             application/json:
               schema:
@@ -5477,7 +5684,7 @@ paths:
     get:
       summary: Get
       description: >
-        Get detailed information about an SSH User Certficate
+        Get detailed information about an SSH User Certificate
       tags:
         - SSHUserCertificates
       operationId: SshUserCertificatesGet
@@ -5493,7 +5700,7 @@ paths:
       responses:
         200:
           description: >
-            Get detailed information about an SSH User Certficate
+            Get detailed information about an SSH User Certificate
           content:
             application/json:
               schema:
@@ -5563,6 +5770,11 @@ paths:
           schema:
             type: string
         - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
           in: query
           required: false
           schema:
@@ -5742,6 +5954,11 @@ paths:
           required: false
           schema:
             type: string
+        - name: filter
+          in: query
+          required: false
+          schema:
+            type: string
       responses:
         200:
           description: >
@@ -5824,6 +6041,41 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Vault"
+  /vaults/{id}/secrets:
+    get:
+      summary: GetSecretsByVault
+      description: >
+        Get Secrets by Vault ID
+      tags:
+        - Vaults
+      operationId: VaultsGetSecretsByVault
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get Secrets by Vault ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/SecretList"
 components:
   securitySchemes:
     authentication:
@@ -5850,6 +6102,31 @@ components:
     Paging:
       type: object
       properties:
+        before_id:
+          description: n/a
+          type: string
+        limit:
+          description: n/a
+          type: string
+    FilteredPaging:
+      type: object
+      properties:
+        before_id:
+          description: n/a
+          type: string
+        limit:
+          description: n/a
+          type: string
+        filter:
+          description: n/a
+          type: string
+    ItemPaging:
+      type: object
+      properties:
+        id:
+          description: >
+            a resource identifier
+          type: string
         before_id:
           description: n/a
           type: string
@@ -8610,7 +8887,7 @@ components:
           type: string
         public_url:
           description: >
-            URL of the hostport served by this endpoint
+            deprecated [replaced by URL]: URL of the hostport served by this endpoint
           type: string
         proto:
           description: >
@@ -8761,16 +9038,19 @@ components:
         limit:
           description: n/a
           type: string
-        ids:
+        id:
           description: n/a
           type: array
           items:
             type: string
-        urls:
+        url:
           description: n/a
           type: array
           items:
             type: string
+        filter:
+          description: n/a
+          type: string
     EndpointUpdate:
       type: object
       properties:
@@ -9717,8 +9997,6 @@ components:
           type: string
     SecretCreate:
       type: object
-      required:
-      - vault_id
       properties:
         name:
           description: >
@@ -9739,6 +10017,10 @@ components:
         vault_id:
           description: >
             unique identifier of the referenced vault
+          type: string
+        vault_name:
+          description: >
+            name of the referenced vault
           type: string
     SecretUpdate:
       type: object
@@ -9806,6 +10088,10 @@ components:
           description: >
             Reference to the vault the secret is stored in
           $ref: "#/components/schemas/Ref"
+        vault_name:
+          description: >
+            Name of the vault the secret is stored in
+          type: string
     SecretList:
       type: object
       properties:
@@ -9821,6 +10107,71 @@ components:
         next_page_uri:
           description: >
             URI of the next page of results, or null if there is no next page
+          type: string
+    ServiceUser:
+      type: object
+      properties:
+        id:
+          description: >
+            unique API key resource identifier
+          type: string
+        uri:
+          description: >
+            URI to the API resource of this service user
+          type: string
+        name:
+          description: >
+            human-readable name used to identify the service
+          type: string
+        active:
+          description: >
+            whether or not the service is active
+          type: boolean
+        created_at:
+          description: >
+            timestamp when the api key was created, RFC 3339 format
+          type: string
+    ServiceUserCreate:
+      type: object
+      properties:
+        name:
+          description: >
+            human-readable name used to identify the service
+          type: string
+        active:
+          description: >
+            whether or not the service is active
+          type: boolean
+    ServiceUserUpdate:
+      type: object
+      properties:
+        id:
+          description: n/a
+          type: string
+        name:
+          description: >
+            human-readable name used to identify the service
+          type: string
+        active:
+          description: >
+            whether or not the service is active
+          type: boolean
+    ServiceUserList:
+      type: object
+      properties:
+        service_users:
+          description: >
+            the list of all service users on this account
+          type: array
+          items:
+            $ref: "#/components/schemas/ServiceUser"
+        uri:
+          description: >
+            URI of the service users list API resource
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page, or null if there is no next page
           type: string
     SSHCertificateAuthorityCreate:
       type: object
