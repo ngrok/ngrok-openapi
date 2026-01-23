@@ -90,16 +90,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -217,16 +223,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -468,16 +480,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -1341,16 +1359,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -1468,16 +1492,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -3788,26 +3818,36 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: id
+          description: >
+            Filter results by endpoint IDs. Deprecated: use `filter` instead.
           in: query
           required: false
           schema:
             type: array
         - name: url
+          description: >
+            Filter results by endpoint URLs. Deprecated: use `filter` instead.
           in: query
           required: false
           schema:
             type: array
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -3927,16 +3967,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -4056,16 +4102,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -4334,16 +4386,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -4461,16 +4519,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -4588,16 +4652,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -4715,16 +4785,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -4842,16 +4918,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -5011,16 +5093,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -5140,16 +5228,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -5267,16 +5361,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -5394,16 +5494,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -5765,16 +5871,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -5945,16 +6057,22 @@ paths:
       parameters:
         - $ref: "#/components/parameters/ngrokVersion"
         - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           in: query
           required: false
           schema:
             type: string
         - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           in: query
           required: false
           schema:
             type: string
         - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           in: query
           required: false
           schema:
@@ -6112,13 +6230,16 @@ components:
       type: object
       properties:
         before_id:
-          description: n/a
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           type: string
         limit:
-          description: n/a
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           type: string
         filter:
-          description: n/a
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           type: string
     ItemPaging:
       type: object
@@ -7307,7 +7428,7 @@ components:
             type: string
         owner_id:
           description: >
-            If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot.
+            If supplied at credential creation, ownership will be assigned to the specified User or Service User. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Service User. Accepts one of: User ID, User email, or SCIM User ID.
           type: string
     CredentialUpdate:
       type: object
@@ -7364,7 +7485,7 @@ components:
             type: string
         owner_id:
           description: >
-            If supplied at credential creation, ownership will be assigned to the specified User or Bot. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Bot.
+            If supplied at credential creation, ownership will be assigned to the specified User or Service User. Only admins may specify an owner other than themselves. Defaults to the authenticated User or Service User. Accepts one of: User ID, User email, or SCIM User ID.
           type: string
     CredentialList:
       type: object
@@ -9033,23 +9154,28 @@ components:
       type: object
       properties:
         before_id:
-          description: n/a
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
           type: string
         limit:
-          description: n/a
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           type: string
         id:
-          description: n/a
+          description: >
+            Filter results by endpoint IDs. Deprecated: use `filter` instead.
           type: array
           items:
             type: string
         url:
-          description: n/a
+          description: >
+            Filter results by endpoint URLs. Deprecated: use `filter` instead.
           type: array
           items:
             type: string
         filter:
-          description: n/a
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
           type: string
     EndpointUpdate:
       type: object
@@ -9864,6 +9990,12 @@ components:
           description: >
             configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`.
           $ref: "#/components/schemas/ReservedDomainCertPolicy"
+        resolves_to:
+          description: >
+            DNS resolver targets configured for the reserved domain, or empty for "global" resolution.
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservedDomainResolvesToEntry"
     ReservedDomainUpdate:
       type: object
       properties:
@@ -9886,6 +10018,12 @@ components:
           description: >
             configuration for automatic management of TLS certificates for this domain, or null if automatic management is disabled. Optional, mutually exclusive with `certificate_id`.
           $ref: "#/components/schemas/ReservedDomainCertPolicy"
+        resolves_to:
+          description: >
+            DNS resolver targets configured for the reserved domain, or empty for "global" resolution.
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservedDomainResolvesToEntry"
     ReservedDomain:
       type: object
       properties:
@@ -9937,6 +10075,12 @@ components:
           description: >
             DNS CNAME target for the host _acme-challenge.example.com, where example.com is your reserved domain name. This is required to issue certificates for wildcard, non-ngrok reserved domains. Must be null for non-wildcard domains and ngrok subdomains.
           type: string
+        resolves_to:
+          description: >
+            DNS resolver targets configured for the reserved domain, or empty for "global" resolution.
+          type: array
+          items:
+            $ref: "#/components/schemas/ReservedDomainResolvesToEntry"
     ReservedDomainList:
       type: object
       properties:
@@ -9994,6 +10138,13 @@ components:
         retries_at:
           description: >
             timestamp when the provisioning job will be retried
+          type: string
+    ReservedDomainResolvesToEntry:
+      type: object
+      properties:
+        value:
+          description: >
+            accepts an ngrok point-of-presence shortcode, or "global"
           type: string
     SecretCreate:
       type: object
