@@ -4,6 +4,16 @@ openapi: 3.0.0
 info:
   title: ngrok OpenAPI
   version: 1.0.0
+  description: |
+    The ngrok REST API at https://api.ngrok.com provides programmatic access to provision and configure every ngrok resource: endpoints, domains, API keys, IP policies, tunnels, certificates, and more. Full documentation: https://ngrok.com/docs/api
+
+    **Authentication:** Send an API key as a bearer token: "Authorization: Bearer {API key}". Create and revoke keys at https://dashboard.ngrok.com/api-keys or via the /api_keys resource. Requests without credentials receive an error with code ERR_NGROK_200.
+
+    **Versioning and deprecation policy:** Every request must include the "ngrok-version: 2" header; a missing header returns HTTP 400 with error code ERR_NGROK_218. Version 2 is the current version; all earlier versions are deprecated. ngrok never makes breaking changes to a published API version. Breaking changes ship only as a new version that clients explicitly opt in to via this header. Additive changes (new resources, methods, and fields, and bug fixes that match documented behavior) may ship to a live version. Full policy: https://ngrok.com/docs/api#versioning-and-api-stability
+
+    **Rate limits:** By default, the API allows 120 requests per rolling 60-second window per account; some plans have higher limits. Exceeding the limit returns HTTP 429 with error code ERR_NGROK_226; wait for the window to pass before retrying. Details: https://ngrok.com/docs/errors/err_ngrok_226
+
+    **Errors:** Every 4xx and 5xx response carries the Error schema: the status_code, a human-readable msg, and in most cases a globally unique machine-readable error_code and a details object. Every error code is documented at https://ngrok.com/docs/errors
 servers:
   - url: https://api.ngrok.com
 security:
@@ -32,6 +42,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AbuseReport"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /abuse_reports/{id}:
     get:
       summary: Get
@@ -57,6 +71,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AbuseReport"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /agent_ingresses:
     post:
       summary: Create
@@ -80,6 +98,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AgentIngress"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -106,6 +128,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata, domain
           in: query
           required: false
           schema:
@@ -118,6 +142,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AgentIngressList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /agent_ingresses/{id}:
     delete:
       summary: Delete
@@ -139,6 +167,10 @@ paths:
         204:
           description: >
             Delete an Agent Ingress by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -163,6 +195,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AgentIngress"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -190,6 +226,309 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AgentIngress"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /ai_gateway_provider_keys:
+    post:
+      summary: Create
+      description: >
+        Create a new AI Gateway Provider Key
+      tags:
+        - AIGatewayProviderKeys
+      operationId: AiGatewayProviderKeysCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AIGatewayProviderKeyCreate"
+      responses:
+        201:
+          description: >
+            Create a new AI Gateway Provider Key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayProviderKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    get:
+      summary: List
+      description: >
+        List AI Gateway Provider Keys
+      tags:
+        - AIGatewayProviderKeys
+      operationId: AiGatewayProviderKeysList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          description: >
+            Constrains the number of results in the dataset.
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: ai_gateway_api_key_id
+          description: >
+            Filter by the AI Gateway API Key ID this provider key is attached to.
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List AI Gateway Provider Keys
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayProviderKeyList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /ai_gateway_provider_keys/{id}:
+    patch:
+      summary: Update
+      description: >
+        Update an existing AI Gateway Provider Key by ID
+      tags:
+        - AIGatewayProviderKeys
+      operationId: AiGatewayProviderKeysUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            unique identifier for this provider key
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AIGatewayProviderKeyUpdate"
+      responses:
+        200:
+          description: >
+            Update an existing AI Gateway Provider Key by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayProviderKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    delete:
+      summary: Delete
+      description: >
+        Delete an AI Gateway Provider Key
+      tags:
+        - AIGatewayProviderKeys
+      operationId: AiGatewayProviderKeysDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete an AI Gateway Provider Key
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    get:
+      summary: Get
+      description: >
+        Get an AI Gateway Provider Key by ID
+      tags:
+        - AIGatewayProviderKeys
+      operationId: AiGatewayProviderKeysGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get an AI Gateway Provider Key by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayProviderKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /ai_gateway_api_keys:
+    post:
+      summary: Create
+      description: >
+        Create a new AI Gateway API Key
+      tags:
+        - AIGatewayAPIKeys
+      operationId: AiGatewayApiKeysCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AIGatewayAPIKeyCreate"
+      responses:
+        201:
+          description: >
+            Create a new AI Gateway API Key
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayAPIKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    get:
+      summary: List
+      description: >
+        List all AI Gateway API Keys owned by account
+      tags:
+        - AIGatewayAPIKeys
+      operationId: AiGatewayApiKeysList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List all AI Gateway API Keys owned by account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayAPIKeyList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /ai_gateway_api_keys/{id}:
+    patch:
+      summary: Update
+      description: >
+        Update an existing AI Gateway API Key by ID
+      tags:
+        - AIGatewayAPIKeys
+      operationId: AiGatewayApiKeysUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            unique identifier for this API key
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/AIGatewayAPIKeyUpdate"
+      responses:
+        200:
+          description: >
+            Update an existing AI Gateway API Key by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayAPIKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    delete:
+      summary: Delete
+      description: >
+        Delete an AI Gateway API Key
+      tags:
+        - AIGatewayAPIKeys
+      operationId: AiGatewayApiKeysDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete an AI Gateway API Key
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    get:
+      summary: Get
+      description: >
+        Get an AI Gateway API Key by ID
+      tags:
+        - AIGatewayAPIKeys
+      operationId: AiGatewayApiKeysGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get an AI Gateway API Key by ID
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/AIGatewayAPIKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /api_keys:
     post:
       summary: Create
@@ -213,6 +552,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -239,6 +582,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, owner_id, created_at
           in: query
           required: false
           schema:
@@ -251,6 +596,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIKeyList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /api_keys/{id}:
     delete:
       summary: Delete
@@ -272,6 +621,10 @@ paths:
         204:
           description: >
             Delete an API key by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -296,6 +649,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -323,6 +680,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/APIKey"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /app/sessions:
     get:
       summary: List
@@ -351,6 +712,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApplicationSessionList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /app/sessions/{id}:
     get:
       summary: Get
@@ -376,6 +741,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApplicationSession"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -396,6 +765,10 @@ paths:
         204:
           description: >
             Delete an application session by ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /app/users:
     get:
       summary: List
@@ -424,6 +797,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApplicationUserList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /app/users/{id}:
     get:
       summary: Get
@@ -449,6 +826,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ApplicationUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -469,6 +850,10 @@ paths:
         204:
           description: >
             Delete an application user by ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnel_sessions:
     get:
       summary: List
@@ -496,6 +881,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, metadata, agent_version, ip, os, region, started_at, credential
           in: query
           required: false
           schema:
@@ -508,6 +895,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelSessionList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnel_sessions/{id}:
     get:
       summary: Get
@@ -533,6 +924,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelSession"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnel_sessions/{id}/restart:
     post:
       summary: Restart
@@ -559,6 +954,10 @@ paths:
         204:
           description: >
             Issues a command instructing the ngrok agent to restart. The agent restarts itself by calling exec() on platforms that support it. This operation is notably not supported on Windows. When an agent restarts, it reconnects with a new tunnel session ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnel_sessions/{id}/stop:
     post:
       summary: Stop
@@ -585,6 +984,10 @@ paths:
         204:
           description: >
             Issues a command instructing the ngrok agent that started this tunnel session to exit.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnel_sessions/{id}/update:
     post:
       summary: Update
@@ -609,6 +1012,10 @@ paths:
         204:
           description: >
             Issues a command instructing the ngrok agent to update itself to the latest version. After this call completes successfully, the ngrok agent will be in the update process. A caller should wait some amount of time to allow the update to complete (at least 10 seconds) before making a call to the Restart endpoint to request that the agent restart itself to start using the new code. This call will never update an ngrok agent to a new major version which could cause breaking compatibility issues. If you wish to update to a new major version, that must be done manually. Still, please be aware that updating your ngrok agent could break your integration. This call will fail in any of the following circumstances: there is no update available the ngrok agent's configuration disabled update checks the agent is currently in process of updating the agent has already successfully updated but has not yet been restarted
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/failover:
     post:
       summary: Create
@@ -632,6 +1039,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FailoverBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -659,6 +1070,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FailoverBackendList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/failover/{id}:
     delete:
       summary: Delete
@@ -680,6 +1095,10 @@ paths:
         204:
           description: >
             Delete a Failover backend by ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -704,6 +1123,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FailoverBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -731,6 +1154,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/FailoverBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/http_response:
     post:
       summary: Create
@@ -751,6 +1178,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPResponseBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       tags:
@@ -775,6 +1206,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPResponseBackendList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/http_response/{id}:
     delete:
       summary: Delete
@@ -793,6 +1228,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -814,6 +1253,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPResponseBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       tags:
@@ -838,6 +1281,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPResponseBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/static:
     post:
       summary: Create
@@ -861,6 +1308,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StaticBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -888,6 +1339,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StaticBackendList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/static/{id}:
     delete:
       summary: Delete
@@ -909,6 +1364,10 @@ paths:
         204:
           description: >
             Delete a static backend by ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -933,6 +1392,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StaticBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -960,6 +1423,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/StaticBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/tunnel_group:
     post:
       summary: Create
@@ -983,6 +1450,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelGroupBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -1010,6 +1481,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelGroupBackendList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/tunnel_group/{id}:
     delete:
       summary: Delete
@@ -1031,6 +1506,10 @@ paths:
         204:
           description: >
             Delete a TunnelGroup backend by ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -1055,6 +1534,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelGroupBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1082,6 +1565,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelGroupBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/weighted:
     post:
       summary: Create
@@ -1105,6 +1592,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WeightedBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -1132,6 +1623,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WeightedBackendList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /backends/weighted/{id}:
     delete:
       summary: Delete
@@ -1153,6 +1648,10 @@ paths:
         204:
           description: >
             Delete a Weighted backend by ID.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -1177,6 +1676,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WeightedBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1204,6 +1707,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/WeightedBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /bot_users:
     post:
       summary: Create
@@ -1227,6 +1734,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BotUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -1254,6 +1765,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BotUserList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /bot_users/{id}:
     delete:
       summary: Delete
@@ -1275,6 +1790,10 @@ paths:
         204:
           description: >
             Delete a bot user by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -1299,6 +1818,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BotUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1326,6 +1849,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BotUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /certificate_authorities:
     post:
       summary: Create
@@ -1349,6 +1876,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CertificateAuthority"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -1375,6 +1906,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata, subject_common_name, not_before, not_after
           in: query
           required: false
           schema:
@@ -1387,6 +1920,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CertificateAuthorityList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /certificate_authorities/{id}:
     delete:
       summary: Delete
@@ -1408,6 +1945,10 @@ paths:
         204:
           description: >
             Delete a Certificate Authority
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -1432,6 +1973,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CertificateAuthority"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1459,6 +2004,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CertificateAuthority"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /credentials:
     post:
       summary: Create
@@ -1482,6 +2031,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Credential"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -1508,6 +2061,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, owner_id, acl, created_at
           in: query
           required: false
           schema:
@@ -1520,6 +2075,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/CredentialList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /credentials/{id}:
     delete:
       summary: Delete
@@ -1541,6 +2100,10 @@ paths:
         204:
           description: >
             Delete a tunnel authtoken credential by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -1565,6 +2128,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Credential"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1592,6 +2159,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Credential"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes:
     post:
       summary: Create
@@ -1622,6 +2193,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdgeRoute"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}:
     get:
       summary: Get
@@ -1654,6 +2229,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdgeRoute"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1690,6 +2269,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdgeRoute"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -1717,6 +2300,10 @@ paths:
         204:
           description: >
             Delete an HTTPS Edge Route by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https:
     post:
       summary: Create
@@ -1740,6 +2327,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -1767,6 +2358,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdgeList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{id}:
     get:
       summary: Get
@@ -1792,6 +2387,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -1821,6 +2420,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HTTPSEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -1841,6 +2444,10 @@ paths:
         204:
           description: >
             Delete an HTTPS Edge by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{id}/mutual_tls:
     put:
       summary: Replace
@@ -1866,6 +2473,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointMutualTLS"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -1887,6 +2498,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointMutualTLS"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -1904,6 +2519,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{id}/tls_termination:
     put:
       summary: Replace
@@ -1929,6 +2548,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTLSTermination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -1950,6 +2573,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTLSTermination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -1967,6 +2594,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/backend:
     put:
       summary: Replace
@@ -1997,6 +2628,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2025,6 +2660,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2049,6 +2688,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/ip_restriction:
     put:
       summary: Replace
@@ -2079,6 +2722,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointIPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2107,6 +2754,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointIPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2131,6 +2782,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/request_headers:
     put:
       summary: Replace
@@ -2161,6 +2816,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointRequestHeaders"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2189,6 +2848,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointRequestHeaders"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2213,6 +2876,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/response_headers:
     put:
       summary: Replace
@@ -2243,6 +2910,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointResponseHeaders"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2271,6 +2942,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointResponseHeaders"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2295,6 +2970,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/compression:
     put:
       summary: Replace
@@ -2325,6 +3004,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointCompression"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2353,6 +3036,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointCompression"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2377,6 +3064,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/circuit_breaker:
     put:
       summary: Replace
@@ -2407,6 +3098,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointCircuitBreaker"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2435,6 +3130,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointCircuitBreaker"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2459,6 +3158,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/webhook_verification:
     put:
       summary: Replace
@@ -2489,6 +3192,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointWebhookValidation"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2517,6 +3224,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointWebhookValidation"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2541,6 +3252,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/oauth:
     put:
       summary: Replace
@@ -2571,6 +3286,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointOAuth"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2599,6 +3318,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointOAuth"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2623,6 +3346,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/saml:
     put:
       summary: Replace
@@ -2653,6 +3380,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointSAML"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2681,6 +3412,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointSAML"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2705,6 +3440,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/oidc:
     put:
       summary: Replace
@@ -2735,6 +3474,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointOIDC"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2763,6 +3506,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointOIDC"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2787,6 +3534,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/websocket_tcp_converter:
     put:
       summary: Replace
@@ -2817,6 +3568,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointWebsocketTCPConverter"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2845,6 +3600,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointWebsocketTCPConverter"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2869,6 +3628,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/user_agent_filter:
     put:
       summary: Replace
@@ -2899,6 +3662,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointUserAgentFilter"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -2927,6 +3694,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointUserAgentFilter"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -2951,6 +3722,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/https/{edge_id}/routes/{id}/traffic_policy:
     put:
       summary: Replace
@@ -2981,6 +3756,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTrafficPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3009,6 +3788,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTrafficPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3033,6 +3816,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tcp:
     post:
       summary: Create
@@ -3056,6 +3843,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TCPEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -3083,6 +3874,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TCPEdgeList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tcp/{id}:
     get:
       summary: Get
@@ -3108,6 +3903,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TCPEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -3137,6 +3936,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TCPEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -3157,6 +3960,10 @@ paths:
         204:
           description: >
             Delete a TCP Edge by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tcp/{id}/backend:
     put:
       summary: Replace
@@ -3182,6 +3989,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3203,6 +4014,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3220,6 +4035,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tcp/{id}/ip_restriction:
     put:
       summary: Replace
@@ -3245,6 +4064,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointIPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3266,6 +4089,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointIPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3283,6 +4110,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tcp/{id}/traffic_policy:
     put:
       summary: Replace
@@ -3308,6 +4139,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTrafficPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3329,6 +4164,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTrafficPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3346,6 +4185,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls:
     post:
       summary: Create
@@ -3369,6 +4212,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -3396,6 +4243,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSEdgeList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls/{id}:
     get:
       summary: Get
@@ -3421,6 +4272,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -3450,6 +4305,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSEdge"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -3470,6 +4329,10 @@ paths:
         204:
           description: >
             Delete a TLS Edge by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls/{id}/backend:
     put:
       summary: Replace
@@ -3495,6 +4358,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3516,6 +4383,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointBackend"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3533,6 +4404,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls/{id}/ip_restriction:
     put:
       summary: Replace
@@ -3558,6 +4433,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointIPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3579,6 +4458,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointIPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3596,6 +4479,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls/{id}/mutual_tls:
     put:
       summary: Replace
@@ -3621,6 +4508,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointMutualTLS"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3642,6 +4533,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointMutualTLS"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3659,6 +4554,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls/{id}/tls_termination:
     put:
       summary: Replace
@@ -3684,6 +4583,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTLSTermination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3705,6 +4608,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTLSTermination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3722,6 +4629,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /edges/tls/{id}/traffic_policy:
     put:
       summary: Replace
@@ -3747,6 +4658,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTrafficPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       tags:
@@ -3768,6 +4683,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointTrafficPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       tags:
@@ -3785,6 +4704,10 @@ paths:
       responses:
         204:
           description: n/a
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /endpoints:
     post:
       summary: Create
@@ -3808,6 +4731,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Endpoint"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -3831,23 +4758,11 @@ paths:
           required: false
           schema:
             type: string
-        - name: id
-          description: >
-            Filter results by endpoint IDs. Deprecated: use `filter` instead.
-          in: query
-          required: false
-          schema:
-            type: array
-        - name: url
-          description: >
-            Filter results by endpoint URLs. Deprecated: use `filter` instead.
-          in: query
-          required: false
-          schema:
-            type: array
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, url, type, pooling_enabled, region, scheme, description, metadata, name, created_at, principal.id, bindings
           in: query
           required: false
           schema:
@@ -3860,6 +4775,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EndpointList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /endpoints/{id}:
     get:
       summary: Get
@@ -3885,6 +4804,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Endpoint"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -3914,6 +4837,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Endpoint"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -3934,6 +4861,10 @@ paths:
         204:
           description: >
             Delete an Endpoint by ID, currently available only for cloud endpoints
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /event_destinations:
     post:
       summary: Create
@@ -3957,6 +4888,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventDestination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -3983,6 +4918,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, created_at
           in: query
           required: false
           schema:
@@ -3995,6 +4932,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventDestinationList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /event_destinations/{id}:
     delete:
       summary: Delete
@@ -4016,6 +4957,10 @@ paths:
         204:
           description: >
             Delete an Event Destination. If the Event Destination is still referenced by an Event Subscription.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4040,6 +4985,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventDestination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4069,6 +5018,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventDestination"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /event_subscriptions:
     post:
       summary: Create
@@ -4092,6 +5045,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSubscription"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4118,6 +5075,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, created_at
           in: query
           required: false
           schema:
@@ -4130,6 +5089,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSubscriptionList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /event_subscriptions/{id}:
     delete:
       summary: Delete
@@ -4151,6 +5114,10 @@ paths:
         204:
           description: >
             Delete an Event Subscription.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4175,6 +5142,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSubscription"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4204,6 +5175,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSubscription"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /event_subscriptions/{subscription_id}/sources:
     post:
       summary: Create
@@ -4234,6 +5209,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSource"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4258,6 +5237,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSourceList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /event_subscriptions/{subscription_id}/sources/{type}:
     delete:
       summary: Delete
@@ -4286,6 +5269,10 @@ paths:
         204:
           description: >
             Remove a type for which this event subscription will trigger
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4317,6 +5304,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSource"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4353,6 +5344,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/EventSource"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ip_policies:
     post:
       summary: Create
@@ -4376,6 +5371,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4402,6 +5401,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata, name
           in: query
           required: false
           schema:
@@ -4414,6 +5415,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicyList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ip_policies/{id}:
     delete:
       summary: Delete
@@ -4435,6 +5440,10 @@ paths:
         204:
           description: >
             Delete an IP policy. If the IP policy is referenced by another object for the purposes of traffic restriction it will be treated as if the IP policy remains but has zero rules.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4459,6 +5468,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4486,6 +5499,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicy"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ip_policy_rules:
     post:
       summary: Create
@@ -4509,6 +5526,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicyRule"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4535,6 +5556,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata, cidr, ip_policy_id, action
           in: query
           required: false
           schema:
@@ -4547,6 +5570,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicyRuleList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ip_policy_rules/{id}:
     delete:
       summary: Delete
@@ -4568,6 +5595,10 @@ paths:
         204:
           description: >
             Delete an IP policy rule.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4592,6 +5623,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicyRule"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4619,6 +5654,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPPolicyRule"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ip_restrictions:
     post:
       summary: Create
@@ -4642,6 +5681,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPRestriction"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4668,6 +5711,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata
           in: query
           required: false
           schema:
@@ -4680,6 +5725,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPRestrictionList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ip_restrictions/{id}:
     delete:
       summary: Delete
@@ -4701,6 +5750,10 @@ paths:
         204:
           description: >
             Delete an IP restriction
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4725,6 +5778,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPRestriction"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4752,6 +5809,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/IPRestriction"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /reserved_addrs:
     post:
       summary: Create
@@ -4775,6 +5836,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedAddr"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4801,6 +5866,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, addr, region, created_at
           in: query
           required: false
           schema:
@@ -4813,6 +5880,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedAddrList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /reserved_addrs/{id}:
     delete:
       summary: Delete
@@ -4834,6 +5905,10 @@ paths:
         204:
           description: >
             Delete a reserved address.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4858,6 +5933,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedAddr"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -4885,6 +5964,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedAddr"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /reserved_domains:
     post:
       summary: Create
@@ -4908,6 +5991,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedDomain"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -4934,6 +6021,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, domain, created_at
           in: query
           required: false
           schema:
@@ -4946,6 +6035,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedDomainList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /reserved_domains/{id}:
     delete:
       summary: Delete
@@ -4967,6 +6060,10 @@ paths:
         204:
           description: >
             Delete a reserved domain.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -4991,6 +6088,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedDomain"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5018,6 +6119,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ReservedDomain"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /reserved_domains/{id}/certificate:
     delete:
       summary: DeleteCertificate
@@ -5039,6 +6144,10 @@ paths:
         204:
           description: >
             Detach the certificate attached to a reserved domain.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /reserved_domains/{id}/certificate_management_policy:
     delete:
       summary: DeleteCertificateManagementPolicy
@@ -5060,6 +6169,10 @@ paths:
         204:
           description: >
             Detach the certificate management policy attached to a reserved domain.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /vault_secrets:
     post:
       summary: Create
@@ -5083,6 +6196,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Secret"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5109,6 +6226,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata, name
           in: query
           required: false
           schema:
@@ -5121,6 +6240,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SecretList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /vault_secrets/{id}:
     patch:
       summary: Update
@@ -5151,6 +6274,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Secret"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -5171,6 +6298,10 @@ paths:
         204:
           description: >
             Delete a Secret
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5195,6 +6326,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Secret"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /service_users:
     post:
       summary: Create
@@ -5218,6 +6353,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServiceUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5244,6 +6383,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, name, created_at
           in: query
           required: false
           schema:
@@ -5256,6 +6397,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServiceUserList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /service_users/{id}:
     delete:
       summary: Delete
@@ -5277,6 +6422,10 @@ paths:
         204:
           description: >
             Delete a service user by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5301,6 +6450,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServiceUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5328,6 +6481,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/ServiceUser"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_certificate_authorities:
     post:
       summary: Create
@@ -5351,6 +6508,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCertificateAuthority"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5377,6 +6538,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata
           in: query
           required: false
           schema:
@@ -5389,6 +6552,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCertificateAuthorityList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_certificate_authorities/{id}:
     delete:
       summary: Delete
@@ -5410,6 +6577,10 @@ paths:
         204:
           description: >
             Delete an SSH Certificate Authority
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5434,6 +6605,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCertificateAuthority"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5461,6 +6636,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCertificateAuthority"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_credentials:
     post:
       summary: Create
@@ -5484,6 +6663,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCredential"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5510,6 +6693,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, owner_id, acl, created_at
           in: query
           required: false
           schema:
@@ -5522,6 +6707,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCredentialList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_credentials/{id}:
     delete:
       summary: Delete
@@ -5543,6 +6732,10 @@ paths:
         204:
           description: >
             Delete an ssh_credential by ID
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5567,6 +6760,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCredential"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5594,6 +6791,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHCredential"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_host_certificates:
     post:
       summary: Create
@@ -5617,6 +6818,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHHostCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5644,6 +6849,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHHostCertificateList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_host_certificates/{id}:
     delete:
       summary: Delete
@@ -5665,6 +6874,10 @@ paths:
         204:
           description: >
             Delete an SSH Host Certificate
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5689,6 +6902,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHHostCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5716,6 +6933,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHHostCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_user_certificates:
     post:
       summary: Create
@@ -5739,6 +6960,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHUserCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5766,6 +6991,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHUserCertificateList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /ssh_user_certificates/{id}:
     delete:
       summary: Delete
@@ -5787,6 +7016,10 @@ paths:
         204:
           description: >
             Delete an SSH User Certificate
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5811,6 +7044,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHUserCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5838,6 +7075,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SSHUserCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tls_certificates:
     post:
       summary: Create
@@ -5861,6 +7102,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -5887,6 +7132,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, metadata, subject_common_name, not_before, not_after, serial_number, created_at
           in: query
           required: false
           schema:
@@ -5899,6 +7146,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSCertificateList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tls_certificates/{id}:
     delete:
       summary: Delete
@@ -5920,6 +7171,10 @@ paths:
         204:
           description: >
             Delete a TLS certificate
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -5944,6 +7199,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     patch:
       summary: Update
       description: >
@@ -5971,6 +7230,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TLSCertificate"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnels:
     get:
       summary: List
@@ -5999,6 +7262,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/TunnelList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /tunnels/{id}:
     get:
       summary: Get
@@ -6024,6 +7291,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Tunnel"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /vaults:
     post:
       summary: Create
@@ -6047,6 +7318,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Vault"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: List
       description: >
@@ -6073,6 +7348,8 @@ paths:
         - name: filter
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, created_at, description, metadata, name
           in: query
           required: false
           schema:
@@ -6085,6 +7362,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/VaultList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /vaults/{id}:
     patch:
       summary: Update
@@ -6115,6 +7396,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Vault"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     delete:
       summary: Delete
       description: >
@@ -6135,6 +7420,10 @@ paths:
         204:
           description: >
             Delete a Vault
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
     get:
       summary: Get
       description: >
@@ -6159,6 +7448,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/Vault"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
   /vaults/{id}/secrets:
     get:
       summary: GetSecretsByVault
@@ -6194,6 +7487,10 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/SecretList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
 components:
   securitySchemes:
     authentication:
@@ -6207,7 +7504,50 @@ components:
       schema:
         type: integer
         default: 2
+  responses:
+    Error:
+      description: >
+        An error. The body carries a machine-readable error_code and a
+        human-readable msg; every code is documented at
+        https://ngrok.com/docs/errors. A 429 with error code ERR_NGROK_226
+        means the account exceeded the documented request-rate limit.
+      content:
+        application/json:
+          schema:
+            $ref: "#/components/schemas/Error"
   schemas:
+    Error:
+      type: object
+      description: >
+        The error body every api.ngrok.com 4xx and 5xx response returns. Every
+        error condition has a globally unique, documented error code; see
+        https://ngrok.com/docs/errors
+      required:
+      - status_code
+      - msg
+      properties:
+        error_code:
+          description: >
+            Globally unique machine-readable error code, for example
+            ERR_NGROK_226. Each code is documented at
+            https://ngrok.com/docs/errors/reference. Omitted on
+            transport-level errors such as a plain 404 for an unknown path.
+          type: string
+        status_code:
+          description: >
+            The HTTP status code of the response, duplicated in the body.
+          type: integer
+        msg:
+          description: >
+            Human-readable description of the error and how to resolve it.
+          type: string
+        details:
+          description: >
+            Additional error context. details.operation_id identifies the
+            failed request when contacting support.
+          type: object
+          additionalProperties:
+            type: string
     Empty:
       type: object
     Item:
@@ -6469,6 +7809,270 @@ components:
         retries_at:
           description: >
             timestamp when the provisioning job will be retried
+          type: string
+    AIGatewayProviderKeyCreate:
+      type: object
+      required:
+      - ai_gateway_api_key_id
+      - provider_id
+      - value
+      properties:
+        ai_gateway_api_key_id:
+          description: >
+            unique identifier of the AI Gateway API Key this provider key is attached to
+          type: string
+        provider_id:
+          description: >
+            which AI provider this key is for, e.g. "openai", "anthropic"
+          type: string
+        value:
+          description: >
+            plaintext provider key value — write-only input
+          type: string
+        description:
+          description: >
+            human-readable description of this provider key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this provider key
+          type: string
+    AIGatewayProviderKeyUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            unique identifier for this provider key
+          type: string
+        description:
+          description: >
+            human-readable description of this provider key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this provider key
+          type: string
+    AIGatewayProviderKey:
+      type: object
+      properties:
+        id:
+          description: >
+            unique identifier for this provider key
+          type: string
+        uri:
+          description: >
+            URI of this AI Gateway Provider Key API resource
+          type: string
+        created_at:
+          description: >
+            Timestamp when the provider key was created (RFC 3339 format)
+          type: string
+        updated_at:
+          description: >
+            Timestamp when the provider key was last updated (RFC 3339 format)
+          type: string
+        provider_id:
+          description: >
+            which AI provider this key is for, e.g. "openai", "anthropic"
+          type: string
+        description:
+          description: >
+            human-readable description of this provider key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this provider key
+          type: string
+        created_by:
+          description: >
+            reference to who created this provider key
+          $ref: "#/components/schemas/Ref"
+        last_updated_by:
+          description: >
+            reference to who last updated this provider key
+          $ref: "#/components/schemas/Ref"
+        ai_gateway_api_key:
+          description: >
+            reference to the AI Gateway API Key this provider key is attached to
+          $ref: "#/components/schemas/Ref"
+        display_name:
+          description: >
+            redacted display form of the key value, e.g. sk-abc***xyz
+          type: string
+        last_used:
+          description: >
+            Timestamp when the provider key was last used (RFC 3339 format)
+          type: string
+    AIGatewayProviderKeyPaging:
+      type: object
+      properties:
+        before_id:
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
+          type: string
+        limit:
+          description: >
+            Constrains the number of results in the dataset.
+          type: string
+        ai_gateway_api_key_id:
+          description: >
+            Filter by the AI Gateway API Key ID this provider key is attached to.
+          type: string
+    AIGatewayProviderKeyList:
+      type: object
+      properties:
+        ai_gateway_provider_keys:
+          description: >
+            the list of AI Gateway Provider Keys for this AI Gateway API Key
+          type: array
+          items:
+            $ref: "#/components/schemas/AIGatewayProviderKey"
+        uri:
+          description: n/a
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page of results, or null if there is no next page
+          type: string
+    AIGatewayAPIKeyCreate:
+      type: object
+      required:
+      - endpoint_id
+      properties:
+        description:
+          description: >
+            human-readable description of this API key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this API key
+          type: string
+        endpoint_id:
+          description: >
+            unique identifier of the AI Gateway endpoint this key is associated with
+          type: string
+        provider_keys:
+          description: >
+            optional list of provider keys to attach to this managed key at create time
+          type: array
+          items:
+            $ref: "#/components/schemas/AIGatewayAPIKeyProviderKeyCreate"
+    AIGatewayAPIKeyUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            unique identifier for this API key
+          type: string
+        description:
+          description: >
+            human-readable description of this API key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this API key
+          type: string
+        endpoint_id:
+          description: >
+            unique identifier of the AI Gateway endpoint to associate this key with
+          type: string
+    AIGatewayAPIKey:
+      type: object
+      properties:
+        id:
+          description: >
+            unique identifier for this API key
+          type: string
+        uri:
+          description: >
+            URI of this AI Gateway API Key API resource
+          type: string
+        created_at:
+          description: >
+            Timestamp when the API key was created (RFC 3339 format)
+          type: string
+        updated_at:
+          description: >
+            Timestamp when the API key was last updated (RFC 3339 format)
+          type: string
+        description:
+          description: >
+            human-readable description of this API key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this API key
+          type: string
+        created_by:
+          description: >
+            reference to who created this API key
+          $ref: "#/components/schemas/Ref"
+        last_updated_by:
+          description: >
+            reference to who last updated this API key
+          $ref: "#/components/schemas/Ref"
+        endpoint:
+          description: >
+            reference to the AI Gateway endpoint this key is associated with
+          $ref: "#/components/schemas/Ref"
+        token:
+          description: >
+            the API key token. Only provided when the key is first created.
+          type: string
+        display_name:
+          description: n/a
+          type: string
+        last_used:
+          description: n/a
+          type: string
+        provider_keys:
+          description: >
+            provider keys attached to this managed key
+          type: array
+          items:
+            $ref: "#/components/schemas/AIGatewayProviderKey"
+    AIGatewayAPIKeyProviderKeyCreate:
+      type: object
+      required:
+      - provider_id
+      - name
+      - value
+      properties:
+        provider_id:
+          description: >
+            which AI provider this key is for, ex: "openai" / "anthropic"
+          type: string
+        name:
+          description: >
+            user-friendly label for this key
+          type: string
+        value:
+          description: >
+            plaintext provider key value — write-only input
+          type: string
+        description:
+          description: >
+            human-readable description of this provider key
+          type: string
+        metadata:
+          description: >
+            arbitrary user-defined metadata for this provider key
+          type: string
+    AIGatewayAPIKeyList:
+      type: object
+      properties:
+        ai_gateway_api_keys:
+          description: >
+            the list of AI Gateway API Keys for this account
+          type: array
+          items:
+            $ref: "#/components/schemas/AIGatewayAPIKey"
+        uri:
+          description: n/a
+          type: string
+        next_page_uri:
+          description: >
+            URI of the next page of results, or null if there is no next page
           type: string
     APIKeyCreate:
       type: object
@@ -7254,15 +8858,15 @@ components:
           type: string
         uri:
           description: >
-            URI to the API resource of this bot user
+            URI to the API resource of this service user
           type: string
         name:
           description: >
-            human-readable name used to identify the bot
+            human-readable name used to identify the service user
           type: string
         active:
           description: >
-            whether or not the bot is active
+            whether or not the service user is active
           type: boolean
         created_at:
           description: >
@@ -7273,11 +8877,11 @@ components:
       properties:
         name:
           description: >
-            human-readable name used to identify the bot
+            human-readable name used to identify the service user
           type: string
         active:
           description: >
-            whether or not the bot is active
+            whether or not the service user is active
           type: boolean
     BotUserUpdate:
       type: object
@@ -7287,24 +8891,24 @@ components:
           type: string
         name:
           description: >
-            human-readable name used to identify the bot
+            human-readable name used to identify the service user
           type: string
         active:
           description: >
-            whether or not the bot is active
+            whether or not the service user is active
           type: boolean
     BotUserList:
       type: object
       properties:
         bot_users:
           description: >
-            the list of all bot users on this account
+            the list of all service users on this account
           type: array
           items:
             $ref: "#/components/schemas/BotUser"
         uri:
           description: >
-            URI of the bot users list API resource
+            URI of the service users list API resource
           type: string
         next_page_uri:
           description: >
@@ -9161,18 +10765,6 @@ components:
           description: >
             Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
           type: string
-        id:
-          description: >
-            Filter results by endpoint IDs. Deprecated: use `filter` instead.
-          type: array
-          items:
-            type: string
-        url:
-          description: >
-            Filter results by endpoint URLs. Deprecated: use `filter` instead.
-          type: array
-          items:
-            type: string
         filter:
           description: >
             A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
@@ -9992,7 +11584,7 @@ components:
           $ref: "#/components/schemas/ReservedDomainCertPolicy"
         resolves_to:
           description: >
-            DNS resolver targets configured for the reserved domain, or empty for "global" resolution.
+            Region and IP resolution targets configured for the Domain.
           type: array
           items:
             $ref: "#/components/schemas/ReservedDomainResolvesToEntry"
@@ -10020,7 +11612,7 @@ components:
           $ref: "#/components/schemas/ReservedDomainCertPolicy"
         resolves_to:
           description: >
-            DNS resolver targets configured for the reserved domain, or empty for "global" resolution.
+            Region and IP resolution targets configured for the Domain.
           type: array
           items:
             $ref: "#/components/schemas/ReservedDomainResolvesToEntry"
@@ -10077,7 +11669,7 @@ components:
           type: string
         resolves_to:
           description: >
-            DNS resolver targets configured for the reserved domain, or empty for "global" resolution.
+            Region and IP resolution targets configured for the Domain.
           type: array
           items:
             $ref: "#/components/schemas/ReservedDomainResolvesToEntry"
