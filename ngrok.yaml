@@ -907,6 +907,7 @@ paths:
   /backends/failover:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a new Failover backend
       tags:
@@ -933,6 +934,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         List all Failover backends on this account
       tags:
@@ -965,6 +967,7 @@ paths:
   /backends/failover/{id}:
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a Failover backend by ID.
       tags:
@@ -989,6 +992,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       description: >
         Get detailed information about a Failover backend by ID
       tags:
@@ -1017,6 +1021,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Update Failover backend by ID
       tags:
@@ -1049,6 +1054,7 @@ paths:
   /backends/http_response:
     post:
       summary: Create
+      deprecated: true
       tags:
         - HTTPResponseBackends
       operationId: HttpResponseBackendsCreate
@@ -1072,6 +1078,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       tags:
         - HTTPResponseBackends
       operationId: HttpResponseBackendsList
@@ -1101,6 +1108,7 @@ paths:
   /backends/http_response/{id}:
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - HTTPResponseBackends
       operationId: HttpResponseBackendsDelete
@@ -1122,6 +1130,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - HTTPResponseBackends
       operationId: HttpResponseBackendsGet
@@ -1147,6 +1156,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       tags:
         - HTTPResponseBackends
       operationId: HttpResponseBackendsUpdate
@@ -1176,6 +1186,7 @@ paths:
   /backends/static:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a new static backend
       tags:
@@ -1202,6 +1213,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         List all static backends on this account
       tags:
@@ -1234,6 +1246,7 @@ paths:
   /backends/static/{id}:
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a static backend by ID.
       tags:
@@ -1258,6 +1271,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       description: >
         Get detailed information about a static backend by ID
       tags:
@@ -1286,6 +1300,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Update static backend by ID
       tags:
@@ -1318,6 +1333,7 @@ paths:
   /backends/tunnel_group:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a new TunnelGroup backend
       tags:
@@ -1344,6 +1360,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         List all TunnelGroup backends on this account
       tags:
@@ -1376,6 +1393,7 @@ paths:
   /backends/tunnel_group/{id}:
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a TunnelGroup backend by ID.
       tags:
@@ -1400,6 +1418,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       description: >
         Get detailed information about a TunnelGroup backend by ID
       tags:
@@ -1428,6 +1447,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Update TunnelGroup backend by ID
       tags:
@@ -1460,6 +1480,7 @@ paths:
   /backends/weighted:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a new Weighted backend
       tags:
@@ -1486,6 +1507,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         List all Weighted backends on this account
       tags:
@@ -1518,6 +1540,7 @@ paths:
   /backends/weighted/{id}:
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a Weighted backend by ID.
       tags:
@@ -1542,6 +1565,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       description: >
         Get detailed information about a Weighted backend by ID
       tags:
@@ -1570,6 +1594,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Update Weighted backend by ID
       tags:
@@ -1602,6 +1627,7 @@ paths:
   /bot_users:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a new bot user
       tags:
@@ -1628,6 +1654,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         List all bot users in this account.
       tags:
@@ -1660,6 +1687,7 @@ paths:
   /bot_users/{id}:
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a bot user by ID
       tags:
@@ -1684,6 +1712,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       description: >
         Get the details of a Bot User by ID.
       tags:
@@ -1712,6 +1741,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Update attributes of a bot user by ID.
       tags:
@@ -2054,6 +2084,7 @@ paths:
   /edges/https/{edge_id}/routes:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create an HTTPS Edge Route
       tags:
@@ -2088,6 +2119,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}:
     get:
       summary: Get
+      deprecated: true
       description: >
         Get an HTTPS Edge Route by ID
       tags:
@@ -2123,6 +2155,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Updates an HTTPS Edge Route by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
@@ -2163,6 +2196,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete an HTTPS Edge Route by ID
       tags:
@@ -2195,6 +2229,7 @@ paths:
   /edges/https:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create an HTTPS Edge
       tags:
@@ -2221,6 +2256,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         Returns a list of all HTTPS Edges on this account
       tags:
@@ -2253,6 +2289,7 @@ paths:
   /edges/https/{id}:
     get:
       summary: Get
+      deprecated: true
       description: >
         Get an HTTPS Edge by ID
       tags:
@@ -2281,6 +2318,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Updates an HTTPS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
@@ -2314,6 +2352,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete an HTTPS Edge by ID
       tags:
@@ -2339,6 +2378,7 @@ paths:
   /edges/https/{id}/mutual_tls:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - HTTPSEdgeMutualTLSModule
       operationId: HttpsEdgeMutualTlsModuleReplace
@@ -2367,6 +2407,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - HTTPSEdgeMutualTLSModule
       operationId: HttpsEdgeMutualTlsModuleGet
@@ -2392,6 +2433,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - HTTPSEdgeMutualTLSModule
       operationId: HttpsEdgeMutualTlsModuleDelete
@@ -2414,6 +2456,7 @@ paths:
   /edges/https/{id}/tls_termination:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - HTTPSEdgeTLSTerminationModule
       operationId: HttpsEdgeTlsTerminationModuleReplace
@@ -2442,6 +2485,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - HTTPSEdgeTLSTerminationModule
       operationId: HttpsEdgeTlsTerminationModuleGet
@@ -2467,6 +2511,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - HTTPSEdgeTLSTerminationModule
       operationId: HttpsEdgeTlsTerminationModuleDelete
@@ -2489,6 +2534,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/backend:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteBackendModule
       operationId: EdgeRouteBackendModuleReplace
@@ -2522,6 +2568,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteBackendModule
       operationId: EdgeRouteBackendModuleGet
@@ -2554,6 +2601,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteBackendModule
       operationId: EdgeRouteBackendModuleDelete
@@ -2583,6 +2631,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/ip_restriction:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteIPRestrictionModule
       operationId: EdgeRouteIpRestrictionModuleReplace
@@ -2616,6 +2665,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteIPRestrictionModule
       operationId: EdgeRouteIpRestrictionModuleGet
@@ -2648,6 +2698,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteIPRestrictionModule
       operationId: EdgeRouteIpRestrictionModuleDelete
@@ -2677,6 +2728,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/request_headers:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteRequestHeadersModule
       operationId: EdgeRouteRequestHeadersModuleReplace
@@ -2710,6 +2762,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteRequestHeadersModule
       operationId: EdgeRouteRequestHeadersModuleGet
@@ -2742,6 +2795,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteRequestHeadersModule
       operationId: EdgeRouteRequestHeadersModuleDelete
@@ -2771,6 +2825,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/response_headers:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteResponseHeadersModule
       operationId: EdgeRouteResponseHeadersModuleReplace
@@ -2804,6 +2859,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteResponseHeadersModule
       operationId: EdgeRouteResponseHeadersModuleGet
@@ -2836,6 +2892,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteResponseHeadersModule
       operationId: EdgeRouteResponseHeadersModuleDelete
@@ -2865,6 +2922,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/compression:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteCompressionModule
       operationId: EdgeRouteCompressionModuleReplace
@@ -2898,6 +2956,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteCompressionModule
       operationId: EdgeRouteCompressionModuleGet
@@ -2930,6 +2989,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteCompressionModule
       operationId: EdgeRouteCompressionModuleDelete
@@ -2959,6 +3019,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/circuit_breaker:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteCircuitBreakerModule
       operationId: EdgeRouteCircuitBreakerModuleReplace
@@ -2992,6 +3053,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteCircuitBreakerModule
       operationId: EdgeRouteCircuitBreakerModuleGet
@@ -3024,6 +3086,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteCircuitBreakerModule
       operationId: EdgeRouteCircuitBreakerModuleDelete
@@ -3053,6 +3116,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/webhook_verification:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteWebhookVerificationModule
       operationId: EdgeRouteWebhookVerificationModuleReplace
@@ -3086,6 +3150,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteWebhookVerificationModule
       operationId: EdgeRouteWebhookVerificationModuleGet
@@ -3118,6 +3183,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteWebhookVerificationModule
       operationId: EdgeRouteWebhookVerificationModuleDelete
@@ -3147,6 +3213,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/oauth:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteOAuthModule
       operationId: EdgeRouteOAuthModuleReplace
@@ -3180,6 +3247,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteOAuthModule
       operationId: EdgeRouteOAuthModuleGet
@@ -3212,6 +3280,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteOAuthModule
       operationId: EdgeRouteOAuthModuleDelete
@@ -3241,6 +3310,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/saml:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteSAMLModule
       operationId: EdgeRouteSamlModuleReplace
@@ -3274,6 +3344,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteSAMLModule
       operationId: EdgeRouteSamlModuleGet
@@ -3306,6 +3377,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteSAMLModule
       operationId: EdgeRouteSamlModuleDelete
@@ -3335,6 +3407,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/oidc:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteOIDCModule
       operationId: EdgeRouteOidcModuleReplace
@@ -3368,6 +3441,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteOIDCModule
       operationId: EdgeRouteOidcModuleGet
@@ -3400,6 +3474,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteOIDCModule
       operationId: EdgeRouteOidcModuleDelete
@@ -3429,6 +3504,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/websocket_tcp_converter:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteWebsocketTCPConverterModule
       operationId: EdgeRouteWebsocketTcpConverterModuleReplace
@@ -3462,6 +3538,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteWebsocketTCPConverterModule
       operationId: EdgeRouteWebsocketTcpConverterModuleGet
@@ -3494,6 +3571,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteWebsocketTCPConverterModule
       operationId: EdgeRouteWebsocketTcpConverterModuleDelete
@@ -3523,6 +3601,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/user_agent_filter:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteUserAgentFilterModule
       operationId: EdgeRouteUserAgentFilterModuleReplace
@@ -3556,6 +3635,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteUserAgentFilterModule
       operationId: EdgeRouteUserAgentFilterModuleGet
@@ -3588,6 +3668,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteUserAgentFilterModule
       operationId: EdgeRouteUserAgentFilterModuleDelete
@@ -3617,6 +3698,7 @@ paths:
   /edges/https/{edge_id}/routes/{id}/traffic_policy:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - EdgeRouteTrafficPolicyModule
       operationId: EdgeRouteTrafficPolicyModuleReplace
@@ -3650,6 +3732,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - EdgeRouteTrafficPolicyModule
       operationId: EdgeRouteTrafficPolicyModuleGet
@@ -3682,6 +3765,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - EdgeRouteTrafficPolicyModule
       operationId: EdgeRouteTrafficPolicyModuleDelete
@@ -3711,6 +3795,7 @@ paths:
   /edges/tcp:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a TCP Edge
       tags:
@@ -3737,6 +3822,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         Returns a list of all TCP Edges on this account
       tags:
@@ -3769,6 +3855,7 @@ paths:
   /edges/tcp/{id}:
     get:
       summary: Get
+      deprecated: true
       description: >
         Get a TCP Edge by ID
       tags:
@@ -3797,6 +3884,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Updates a TCP Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
@@ -3830,6 +3918,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a TCP Edge by ID
       tags:
@@ -3855,6 +3944,7 @@ paths:
   /edges/tcp/{id}/backend:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TCPEdgeBackendModule
       operationId: TcpEdgeBackendModuleReplace
@@ -3883,6 +3973,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TCPEdgeBackendModule
       operationId: TcpEdgeBackendModuleGet
@@ -3908,6 +3999,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TCPEdgeBackendModule
       operationId: TcpEdgeBackendModuleDelete
@@ -3930,6 +4022,7 @@ paths:
   /edges/tcp/{id}/ip_restriction:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TCPEdgeIPRestrictionModule
       operationId: TcpEdgeIpRestrictionModuleReplace
@@ -3958,6 +4051,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TCPEdgeIPRestrictionModule
       operationId: TcpEdgeIpRestrictionModuleGet
@@ -3983,6 +4077,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TCPEdgeIPRestrictionModule
       operationId: TcpEdgeIpRestrictionModuleDelete
@@ -4005,6 +4100,7 @@ paths:
   /edges/tcp/{id}/traffic_policy:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TCPEdgeTrafficPolicyModule
       operationId: TcpEdgeTrafficPolicyModuleReplace
@@ -4033,6 +4129,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TCPEdgeTrafficPolicyModule
       operationId: TcpEdgeTrafficPolicyModuleGet
@@ -4058,6 +4155,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TCPEdgeTrafficPolicyModule
       operationId: TcpEdgeTrafficPolicyModuleDelete
@@ -4080,6 +4178,7 @@ paths:
   /edges/tls:
     post:
       summary: Create
+      deprecated: true
       description: >
         Create a TLS Edge
       tags:
@@ -4106,6 +4205,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: List
+      deprecated: true
       description: >
         Returns a list of all TLS Edges on this account
       tags:
@@ -4138,6 +4238,7 @@ paths:
   /edges/tls/{id}:
     get:
       summary: Get
+      deprecated: true
       description: >
         Get a TLS Edge by ID
       tags:
@@ -4166,6 +4267,7 @@ paths:
           $ref: "#/components/responses/Error"
     patch:
       summary: Update
+      deprecated: true
       description: >
         Updates a TLS Edge by ID. If a module is not specified in the update, it will not be modified. However, each module configuration that is specified will completely replace the existing value. There is no way to delete an existing module via this API, instead use the delete module API.
       tags:
@@ -4199,6 +4301,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       description: >
         Delete a TLS Edge by ID
       tags:
@@ -4224,6 +4327,7 @@ paths:
   /edges/tls/{id}/backend:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TLSEdgeBackendModule
       operationId: TlsEdgeBackendModuleReplace
@@ -4252,6 +4356,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TLSEdgeBackendModule
       operationId: TlsEdgeBackendModuleGet
@@ -4277,6 +4382,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TLSEdgeBackendModule
       operationId: TlsEdgeBackendModuleDelete
@@ -4299,6 +4405,7 @@ paths:
   /edges/tls/{id}/ip_restriction:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TLSEdgeIPRestrictionModule
       operationId: TlsEdgeIpRestrictionModuleReplace
@@ -4327,6 +4434,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TLSEdgeIPRestrictionModule
       operationId: TlsEdgeIpRestrictionModuleGet
@@ -4352,6 +4460,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TLSEdgeIPRestrictionModule
       operationId: TlsEdgeIpRestrictionModuleDelete
@@ -4374,6 +4483,7 @@ paths:
   /edges/tls/{id}/mutual_tls:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TLSEdgeMutualTLSModule
       operationId: TlsEdgeMutualTlsModuleReplace
@@ -4402,6 +4512,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TLSEdgeMutualTLSModule
       operationId: TlsEdgeMutualTlsModuleGet
@@ -4427,6 +4538,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TLSEdgeMutualTLSModule
       operationId: TlsEdgeMutualTlsModuleDelete
@@ -4449,6 +4561,7 @@ paths:
   /edges/tls/{id}/tls_termination:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TLSEdgeTLSTerminationModule
       operationId: TlsEdgeTlsTerminationModuleReplace
@@ -4477,6 +4590,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TLSEdgeTLSTerminationModule
       operationId: TlsEdgeTlsTerminationModuleGet
@@ -4502,6 +4616,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TLSEdgeTLSTerminationModule
       operationId: TlsEdgeTlsTerminationModuleDelete
@@ -4524,6 +4639,7 @@ paths:
   /edges/tls/{id}/traffic_policy:
     put:
       summary: Replace
+      deprecated: true
       tags:
         - TLSEdgeTrafficPolicyModule
       operationId: TlsEdgeTrafficPolicyModuleReplace
@@ -4552,6 +4668,7 @@ paths:
           $ref: "#/components/responses/Error"
     get:
       summary: Get
+      deprecated: true
       tags:
         - TLSEdgeTrafficPolicyModule
       operationId: TlsEdgeTrafficPolicyModuleGet
@@ -4577,6 +4694,7 @@ paths:
           $ref: "#/components/responses/Error"
     delete:
       summary: Delete
+      deprecated: true
       tags:
         - TLSEdgeTrafficPolicyModule
       operationId: TlsEdgeTrafficPolicyModuleDelete
@@ -7125,6 +7243,7 @@ paths:
   /tunnels:
     get:
       summary: List
+      deprecated: true
       description: >
         List all online tunnels currently running on the account.
       tags:
@@ -7157,6 +7276,7 @@ paths:
   /tunnels/{id}:
     get:
       summary: Get
+      deprecated: true
       description: >
         Get the status of a tunnel by ID
       tags:
