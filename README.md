@@ -7,7 +7,7 @@ This repository contains the OpenAPI specification for the
 
 ## Support
 
-The best place to get support is through the
-[ngrok Slack Community](https://ngrok.com/slack). If you find any bugs, please
-contribute by opening a
-[new GitHub issue](https://github.com/ngrok/ngrok-openapi/issues/new).
+The best place to get support is by opening a
+[new GitHub issue](https://github.com/ngrok/ngrok-openapi/issues/new). For
+account or billing questions, contact
+[ngrok support](https://ngrok.com/support).

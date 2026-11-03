@@ -23,7 +23,7 @@ paths:
     post:
       summary: Create
       description: >
-        Creates a new abuse report which will be reviewed by our system and abuse response team. This API is only available to authorized accounts. Contact abuse@ngrok.com to request access
+        Creates a new abuse report which will be reviewed by the ngrok abuse system and response team. This API is only available to authorized accounts. Contact abuse@ngrok.com to request access
       tags:
         - AbuseReports
       operationId: AbuseReportsCreate
@@ -37,7 +37,7 @@ paths:
       responses:
         201:
           description: >
-            Creates a new abuse report which will be reviewed by our system and abuse response team. This API is only available to authorized accounts. Contact abuse@ngrok.com to request access
+            Creates a new abuse report which will be reviewed by the ngrok abuse system and response team. This API is only available to authorized accounts. Contact abuse@ngrok.com to request access
           content:
             application/json:
               schema:
@@ -71,6 +71,193 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AbuseReport"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /access_tokens:
+    post:
+      summary: Create
+      description: >
+        Create a new access token. The token value is returned only in this response and can't be retrieved later. If you lose it, create a new token.
+      tags:
+        - PersonalAccessTokens
+      operationId: PersonalAccessTokensCreate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PersonalAccessTokenCreate"
+      responses:
+        201:
+          description: >
+            Create a new access token. The token value is returned only in this response and can't be retrieved later. If you lose it, create a new token.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalAccessToken"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    get:
+      summary: List
+      description: >
+        List all access tokens for this account
+      tags:
+        - PersonalAccessTokens
+      operationId: PersonalAccessTokensList
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: before_id
+          description: >
+            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: limit
+          description: >
+            Constrains the number of results in the dataset. See the [API Overview](https://ngrok.com/docs/api/index#pagination) for details.
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: filter
+          description: >
+            A CEL expression to filter the list results. Supports logical and comparison operators to match on fields such as `id`, `metadata`, `created_at`, and more. See ngrok API Filtering for syntax and field details: https://ngrok.com/docs/api/api-filtering.
+
+            Filterable fields: id, description, owner_id, created_at, expires_at, revoked_at
+          in: query
+          required: false
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            List all access tokens for this account
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalAccessTokenList"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /access_tokens/{id}:
+    delete:
+      summary: Delete
+      description: >
+        Delete an access token by ID. The token stops working within about two minutes and disappears from Get/List, but is not permanently removed -- it may be restored by an ngrok operator as part of a support request.
+      tags:
+        - PersonalAccessTokens
+      operationId: PersonalAccessTokensDelete
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        204:
+          description: >
+            Delete an access token by ID. The token stops working within about two minutes and disappears from Get/List, but is not permanently removed -- it may be restored by an ngrok operator as part of a support request.
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    get:
+      summary: Get
+      description: >
+        Get an access token by ID.
+      tags:
+        - PersonalAccessTokens
+      operationId: PersonalAccessTokensGet
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: >
+            Get an access token by ID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalAccessToken"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+    patch:
+      summary: Update
+      description: >
+        Update the description or scopes of an access token by ID.
+      tags:
+        - PersonalAccessTokens
+      operationId: PersonalAccessTokensUpdate
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            unique identifier of the access token to update
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/PersonalAccessTokenUpdate"
+      responses:
+        200:
+          description: >
+            Update the description or scopes of an access token by ID.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PersonalAccessToken"
+        "4XX":
+          $ref: "#/components/responses/Error"
+        "5XX":
+          $ref: "#/components/responses/Error"
+  /access_tokens/{id}/revoke:
+    post:
+      summary: Revoke
+      description: >
+        Revoke an access token by ID. The token stops working within about two minutes. Unlike Delete, a revoked token remains visible in Get/List responses.
+      tags:
+        - PersonalAccessTokens
+      operationId: PersonalAccessTokensRevoke
+      parameters:
+        - $ref: "#/components/parameters/ngrokVersion"
+        - name: id
+          description: >
+            a resource identifier
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Item"
+      responses:
+        204:
+          description: >
+            Revoke an access token by ID. The token stops working within about two minutes. Unlike Delete, a revoked token remains visible in Get/List responses.
         "4XX":
           $ref: "#/components/responses/Error"
         "5XX":
@@ -226,305 +413,6 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/AgentIngress"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-  /ai_gateway_provider_keys:
-    post:
-      summary: Create
-      description: >
-        Create a new AI Gateway Provider Key
-      tags:
-        - AIGatewayProviderKeys
-      operationId: AiGatewayProviderKeysCreate
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AIGatewayProviderKeyCreate"
-      responses:
-        201:
-          description: >
-            Create a new AI Gateway Provider Key
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayProviderKey"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-    get:
-      summary: List
-      description: >
-        List AI Gateway Provider Keys
-      tags:
-        - AIGatewayProviderKeys
-      operationId: AiGatewayProviderKeysList
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: before_id
-          description: >
-            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: limit
-          description: >
-            Constrains the number of results in the dataset.
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: ai_gateway_api_key_id
-          description: >
-            Filter by the AI Gateway API Key ID this provider key is attached to.
-          in: query
-          required: false
-          schema:
-            type: string
-      responses:
-        200:
-          description: >
-            List AI Gateway Provider Keys
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayProviderKeyList"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-  /ai_gateway_provider_keys/{id}:
-    patch:
-      summary: Update
-      description: >
-        Update an existing AI Gateway Provider Key by ID
-      tags:
-        - AIGatewayProviderKeys
-      operationId: AiGatewayProviderKeysUpdate
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: id
-          description: >
-            unique identifier for this provider key
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AIGatewayProviderKeyUpdate"
-      responses:
-        200:
-          description: >
-            Update an existing AI Gateway Provider Key by ID
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayProviderKey"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-    delete:
-      summary: Delete
-      description: >
-        Delete an AI Gateway Provider Key
-      tags:
-        - AIGatewayProviderKeys
-      operationId: AiGatewayProviderKeysDelete
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: id
-          description: >
-            a resource identifier
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        204:
-          description: >
-            Delete an AI Gateway Provider Key
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-    get:
-      summary: Get
-      description: >
-        Get an AI Gateway Provider Key by ID
-      tags:
-        - AIGatewayProviderKeys
-      operationId: AiGatewayProviderKeysGet
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: id
-          description: >
-            a resource identifier
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: >
-            Get an AI Gateway Provider Key by ID
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayProviderKey"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-  /ai_gateway_api_keys:
-    post:
-      summary: Create
-      description: >
-        Create a new AI Gateway API Key
-      tags:
-        - AIGatewayAPIKeys
-      operationId: AiGatewayApiKeysCreate
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AIGatewayAPIKeyCreate"
-      responses:
-        201:
-          description: >
-            Create a new AI Gateway API Key
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayAPIKey"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-    get:
-      summary: List
-      description: >
-        List all AI Gateway API Keys owned by account
-      tags:
-        - AIGatewayAPIKeys
-      operationId: AiGatewayApiKeysList
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: before_id
-          in: query
-          required: false
-          schema:
-            type: string
-        - name: limit
-          in: query
-          required: false
-          schema:
-            type: string
-      responses:
-        200:
-          description: >
-            List all AI Gateway API Keys owned by account
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayAPIKeyList"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-  /ai_gateway_api_keys/{id}:
-    patch:
-      summary: Update
-      description: >
-        Update an existing AI Gateway API Key by ID
-      tags:
-        - AIGatewayAPIKeys
-      operationId: AiGatewayApiKeysUpdate
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: id
-          description: >
-            unique identifier for this API key
-          in: path
-          required: true
-          schema:
-            type: string
-      requestBody:
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/AIGatewayAPIKeyUpdate"
-      responses:
-        200:
-          description: >
-            Update an existing AI Gateway API Key by ID
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayAPIKey"
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-    delete:
-      summary: Delete
-      description: >
-        Delete an AI Gateway API Key
-      tags:
-        - AIGatewayAPIKeys
-      operationId: AiGatewayApiKeysDelete
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: id
-          description: >
-            a resource identifier
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        204:
-          description: >
-            Delete an AI Gateway API Key
-        "4XX":
-          $ref: "#/components/responses/Error"
-        "5XX":
-          $ref: "#/components/responses/Error"
-    get:
-      summary: Get
-      description: >
-        Get an AI Gateway API Key by ID
-      tags:
-        - AIGatewayAPIKeys
-      operationId: AiGatewayApiKeysGet
-      parameters:
-        - $ref: "#/components/parameters/ngrokVersion"
-        - name: id
-          description: >
-            a resource identifier
-          in: path
-          required: true
-          schema:
-            type: string
-      responses:
-        200:
-          description: >
-            Get an AI Gateway API Key by ID
-          content:
-            application/json:
-              schema:
-                $ref: "#/components/schemas/AIGatewayAPIKey"
         "4XX":
           $ref: "#/components/responses/Error"
         "5XX":
@@ -4712,7 +4600,7 @@ paths:
     post:
       summary: Create
       description: >
-        Create an endpoint, currently available only for cloud endpoints
+        Create an endpoint, currently available only for Cloud Endpoints
       tags:
         - Endpoints
       operationId: EndpointsCreate
@@ -4726,7 +4614,7 @@ paths:
       responses:
         201:
           description: >
-            Create an endpoint, currently available only for cloud endpoints
+            Create an endpoint, currently available only for Cloud Endpoints
           content:
             application/json:
               schema:
@@ -4811,7 +4699,7 @@ paths:
     patch:
       summary: Update
       description: >
-        Update an Endpoint by ID, currently available only for cloud endpoints
+        Update an Endpoint by ID, currently available only for Cloud Endpoints
       tags:
         - Endpoints
       operationId: EndpointsUpdate
@@ -4832,7 +4720,7 @@ paths:
       responses:
         200:
           description: >
-            Update an Endpoint by ID, currently available only for cloud endpoints
+            Update an Endpoint by ID, currently available only for Cloud Endpoints
           content:
             application/json:
               schema:
@@ -4844,7 +4732,7 @@ paths:
     delete:
       summary: Delete
       description: >
-        Delete an Endpoint by ID, currently available only for cloud endpoints
+        Delete an Endpoint by ID, currently available only for Cloud Endpoints
       tags:
         - Endpoints
       operationId: EndpointsDelete
@@ -4860,7 +4748,7 @@ paths:
       responses:
         204:
           description: >
-            Delete an Endpoint by ID, currently available only for cloud endpoints
+            Delete an Endpoint by ID, currently available only for Cloud Endpoints
         "4XX":
           $ref: "#/components/responses/Error"
         "5XX":
@@ -7666,6 +7554,94 @@ components:
           description: >
             arbitrary user-defined data about this abuse report. Optional, max 4096 bytes.
           type: string
+    PersonalAccessTokenCreate:
+      type: object
+      properties:
+        description:
+          description: >
+            human-readable description of this token. Optional, max 255 bytes.
+          type: string
+        expires_at:
+          description: >
+            optional expiration time for this token. If unset the token does not expire.
+          type: string
+        scopes:
+          description: >
+            scopes this token can use, for example `["endpoints:read"]`. Each must be a scope you can grant.
+          type: array
+          items:
+            type: string
+    PersonalAccessToken:
+      type: object
+      properties:
+        id:
+          description: >
+            unique identifier of the access token
+          type: string
+        uri:
+          description: >
+            URI of this access token API resource
+          type: string
+        description:
+          description: >
+            human-readable description of this token
+          type: string
+        token:
+          description: >
+            opaque bearer token secret. **Only present in the Create response.**
+          type: string
+        created_at:
+          description: >
+            timestamp when the token was created, RFC 3339 format
+          type: string
+        expires_at:
+          description: >
+            optional expiration time, RFC 3339 format. Omitted if the token does not expire.
+          type: string
+        revoked_at:
+          description: >
+            optional timestamp when the token was revoked, RFC 3339 format. Omitted if not revoked.
+          type: string
+        scopes:
+          description: >
+            scopes this token was granted. Effective access is also limited by the owner's current role.
+          type: array
+          items:
+            type: string
+    PersonalAccessTokenUpdate:
+      type: object
+      properties:
+        id:
+          description: >
+            unique identifier of the access token to update
+          type: string
+        description:
+          description: >
+            human-readable description of this token. Optional, max 255 bytes.
+          type: string
+        scopes:
+          description: >
+            replaces the token's scopes. Omit to keep them.
+          type: array
+          items:
+            type: string
+    PersonalAccessTokenList:
+      type: object
+      properties:
+        tokens:
+          description: >
+            list of access tokens visible to the authenticated account
+          type: array
+          items:
+            $ref: "#/components/schemas/PersonalAccessToken"
+        uri:
+          description: >
+            URI of the access token API resource list
+          type: string
+        next_page_uri:
+          description: >
+            URI for the next page of results, or null if there are no more pages.
+          type: string
     AgentIngressCreate:
       type: object
       required:
@@ -7809,270 +7785,6 @@ components:
         retries_at:
           description: >
             timestamp when the provisioning job will be retried
-          type: string
-    AIGatewayProviderKeyCreate:
-      type: object
-      required:
-      - ai_gateway_api_key_id
-      - provider_id
-      - value
-      properties:
-        ai_gateway_api_key_id:
-          description: >
-            unique identifier of the AI Gateway API Key this provider key is attached to
-          type: string
-        provider_id:
-          description: >
-            which AI provider this key is for, e.g. "openai", "anthropic"
-          type: string
-        value:
-          description: >
-            plaintext provider key value — write-only input
-          type: string
-        description:
-          description: >
-            human-readable description of this provider key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this provider key
-          type: string
-    AIGatewayProviderKeyUpdate:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier for this provider key
-          type: string
-        description:
-          description: >
-            human-readable description of this provider key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this provider key
-          type: string
-    AIGatewayProviderKey:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier for this provider key
-          type: string
-        uri:
-          description: >
-            URI of this AI Gateway Provider Key API resource
-          type: string
-        created_at:
-          description: >
-            Timestamp when the provider key was created (RFC 3339 format)
-          type: string
-        updated_at:
-          description: >
-            Timestamp when the provider key was last updated (RFC 3339 format)
-          type: string
-        provider_id:
-          description: >
-            which AI provider this key is for, e.g. "openai", "anthropic"
-          type: string
-        description:
-          description: >
-            human-readable description of this provider key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this provider key
-          type: string
-        created_by:
-          description: >
-            reference to who created this provider key
-          $ref: "#/components/schemas/Ref"
-        last_updated_by:
-          description: >
-            reference to who last updated this provider key
-          $ref: "#/components/schemas/Ref"
-        ai_gateway_api_key:
-          description: >
-            reference to the AI Gateway API Key this provider key is attached to
-          $ref: "#/components/schemas/Ref"
-        display_name:
-          description: >
-            redacted display form of the key value, e.g. sk-abc***xyz
-          type: string
-        last_used:
-          description: >
-            Timestamp when the provider key was last used (RFC 3339 format)
-          type: string
-    AIGatewayProviderKeyPaging:
-      type: object
-      properties:
-        before_id:
-          description: >
-            Expects a resource ID as its input. Returns earlier entries in the result set, sorted by ID.
-          type: string
-        limit:
-          description: >
-            Constrains the number of results in the dataset.
-          type: string
-        ai_gateway_api_key_id:
-          description: >
-            Filter by the AI Gateway API Key ID this provider key is attached to.
-          type: string
-    AIGatewayProviderKeyList:
-      type: object
-      properties:
-        ai_gateway_provider_keys:
-          description: >
-            the list of AI Gateway Provider Keys for this AI Gateway API Key
-          type: array
-          items:
-            $ref: "#/components/schemas/AIGatewayProviderKey"
-        uri:
-          description: n/a
-          type: string
-        next_page_uri:
-          description: >
-            URI of the next page of results, or null if there is no next page
-          type: string
-    AIGatewayAPIKeyCreate:
-      type: object
-      required:
-      - endpoint_id
-      properties:
-        description:
-          description: >
-            human-readable description of this API key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this API key
-          type: string
-        endpoint_id:
-          description: >
-            unique identifier of the AI Gateway endpoint this key is associated with
-          type: string
-        provider_keys:
-          description: >
-            optional list of provider keys to attach to this managed key at create time
-          type: array
-          items:
-            $ref: "#/components/schemas/AIGatewayAPIKeyProviderKeyCreate"
-    AIGatewayAPIKeyUpdate:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier for this API key
-          type: string
-        description:
-          description: >
-            human-readable description of this API key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this API key
-          type: string
-        endpoint_id:
-          description: >
-            unique identifier of the AI Gateway endpoint to associate this key with
-          type: string
-    AIGatewayAPIKey:
-      type: object
-      properties:
-        id:
-          description: >
-            unique identifier for this API key
-          type: string
-        uri:
-          description: >
-            URI of this AI Gateway API Key API resource
-          type: string
-        created_at:
-          description: >
-            Timestamp when the API key was created (RFC 3339 format)
-          type: string
-        updated_at:
-          description: >
-            Timestamp when the API key was last updated (RFC 3339 format)
-          type: string
-        description:
-          description: >
-            human-readable description of this API key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this API key
-          type: string
-        created_by:
-          description: >
-            reference to who created this API key
-          $ref: "#/components/schemas/Ref"
-        last_updated_by:
-          description: >
-            reference to who last updated this API key
-          $ref: "#/components/schemas/Ref"
-        endpoint:
-          description: >
-            reference to the AI Gateway endpoint this key is associated with
-          $ref: "#/components/schemas/Ref"
-        token:
-          description: >
-            the API key token. Only provided when the key is first created.
-          type: string
-        display_name:
-          description: n/a
-          type: string
-        last_used:
-          description: n/a
-          type: string
-        provider_keys:
-          description: >
-            provider keys attached to this managed key
-          type: array
-          items:
-            $ref: "#/components/schemas/AIGatewayProviderKey"
-    AIGatewayAPIKeyProviderKeyCreate:
-      type: object
-      required:
-      - provider_id
-      - name
-      - value
-      properties:
-        provider_id:
-          description: >
-            which AI provider this key is for, ex: "openai" / "anthropic"
-          type: string
-        name:
-          description: >
-            user-friendly label for this key
-          type: string
-        value:
-          description: >
-            plaintext provider key value — write-only input
-          type: string
-        description:
-          description: >
-            human-readable description of this provider key
-          type: string
-        metadata:
-          description: >
-            arbitrary user-defined metadata for this provider key
-          type: string
-    AIGatewayAPIKeyList:
-      type: object
-      properties:
-        ai_gateway_api_keys:
-          description: >
-            the list of AI Gateway API Keys for this account
-          type: array
-          items:
-            $ref: "#/components/schemas/AIGatewayAPIKey"
-        uri:
-          description: n/a
-          type: string
-        next_page_uri:
-          description: >
-            URI of the next page of results, or null if there is no next page
           type: string
     APIKeyCreate:
       type: object
@@ -8239,23 +7951,23 @@ components:
           type: string
         browser_name:
           description: >
-            browser name (e.g. Chrome)
+            browser name (for example, Chrome)
           type: string
         browser_version:
           description: >
-            browser version (e.g. 102)
+            browser version (for example, 102)
           type: string
         device_type:
           description: >
-            type of device (e.g. Desktop)
+            type of device (for example, Desktop)
           type: string
         os_name:
           description: >
-            operating system name (e.g. MacOS)
+            operating system name (for example, MacOS)
           type: string
         os_version:
           description: >
-            operating system version (e.g. 10.15.7)
+            operating system version (for example, 10.15.7)
           type: string
     Location:
       type: object
@@ -8341,11 +8053,11 @@ components:
       properties:
         name:
           description: >
-            name of the identity provider (e.g. Google)
+            name of the identity provider (for example, Google)
           type: string
         url:
           description: >
-            URL of the identity provider (e.g. https://accounts.google.com)
+            URL of the identity provider (for example, https://accounts.google.com)
           type: string
     TunnelSession:
       type: object
@@ -8714,7 +8426,7 @@ components:
           type: string
         labels:
           description: >
-            labels to watch for tunnels on, e.g. app->foo, dc->bar
+            labels to watch for tunnels on, for example app->foo, dc->bar
           type: object
         tunnels:
           description: >
@@ -8735,7 +8447,7 @@ components:
           type: string
         labels:
           description: >
-            labels to watch for tunnels on, e.g. app->foo, dc->bar
+            labels to watch for tunnels on, for example app->foo, dc->bar
           type: object
     TunnelGroupBackendUpdate:
       type: object
@@ -8753,7 +8465,7 @@ components:
           type: string
         labels:
           description: >
-            labels to watch for tunnels on, e.g. app->foo, dc->bar
+            labels to watch for tunnels on, for example app->foo, dc->bar
           type: object
     TunnelGroupBackendList:
       type: object
@@ -9348,7 +9060,7 @@ components:
           type: string
         scopes:
           description: >
-            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both `client_id` and `client_secret` to set scopes)
+            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (that is, you must pass both `client_id` and `client_secret` to set scopes)
           type: array
           items:
             type: string
@@ -9366,7 +9078,7 @@ components:
             type: string
         teams:
           description: >
-            a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the 'slug' format qualified with the org name, e.g. `org-name/team-name`
+            a list of github teams identifiers. users will be allowed access to the endpoint if they are a member of any of these teams. identifiers should be in the 'slug' format qualified with the org name, for example `org-name/team-name`
           type: array
           items:
             type: string
@@ -9389,7 +9101,7 @@ components:
           type: string
         scopes:
           description: >
-            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both `client_id` and `client_secret` to set scopes)
+            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (that is, you must pass both `client_id` and `client_secret` to set scopes)
           type: array
           items:
             type: string
@@ -9418,7 +9130,7 @@ components:
           type: string
         scopes:
           description: >
-            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both `client_id` and `client_secret` to set scopes)
+            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (that is, you must pass both `client_id` and `client_secret` to set scopes)
           type: array
           items:
             type: string
@@ -9447,7 +9159,7 @@ components:
           type: string
         scopes:
           description: >
-            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (i.e. you must pass both `client_id` and `client_secret` to set scopes)
+            a list of provider-specific OAuth scopes with the permissions your OAuth app would like to ask for. these may not be set if you are using the ngrok-managed oauth app (that is, you must pass both `client_id` and `client_secret` to set scopes)
           type: array
           items:
             type: string
@@ -9588,11 +9300,11 @@ components:
           type: string
         force_authn:
           description: >
-            If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP.
+            If true, indicates that whenever ngrok redirects a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP.
           type: boolean
         allow_idp_initiated:
           description: >
-            If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the `RelayState` parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed.
+            If true, the IdP may initiate a login directly (for example, the user does not need to visit the endpoint first and then be redirected). The IdP should set the `RelayState` parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed.
           type: boolean
         authorized_groups:
           description: >
@@ -9614,7 +9326,7 @@ components:
           type: string
         request_signing_certificate_pem:
           description: >
-            PEM-encoded x.509 certificate of the key pair that is used to sign all SAML requests that the ngrok SP makes to the IdP. Many IdPs do not support request signing verification, but we highly recommend specifying this in the IdP's configuration if it is supported.
+            PEM-encoded x.509 certificate of the key pair that is used to sign all SAML requests that the ngrok SP makes to the IdP. Many IdPs do not support request signing verification, but ngrok highly recommends specifying this in the IdP's configuration if it is supported.
           type: string
         metadata_url:
           description: >
@@ -9653,11 +9365,11 @@ components:
           type: string
         force_authn:
           description: >
-            If true, indicates that whenever we redirect a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP.
+            If true, indicates that whenever ngrok redirects a user to the IdP for authentication that the IdP must prompt the user for authentication credentials even if the user already has a valid session with the IdP.
           type: boolean
         allow_idp_initiated:
           description: >
-            If true, the IdP may initiate a login directly (e.g. the user does not need to visit the endpoint first and then be redirected). The IdP should set the `RelayState` parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed.
+            If true, the IdP may initiate a login directly (for example, the user does not need to visit the endpoint first and then be redirected). The IdP should set the `RelayState` parameter to the target URL of the resource they want the user to be redirected to after the SAML login assertion has been processed.
           type: boolean
         authorized_groups:
           description: >
@@ -9764,7 +9476,7 @@ components:
           type: boolean
         value:
           description: >
-            the traffic policy that should be applied to the traffic on your endpoint.
+            the Traffic Policy that should be applied to the traffic on your endpoint.
           type: string
     EdgeRouteItem:
       type: object
@@ -9852,7 +9564,7 @@ components:
           $ref: "#/components/schemas/EndpointUserAgentFilter"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     HTTPSEdgeRouteUpdate:
       type: object
@@ -9930,7 +9642,7 @@ components:
           $ref: "#/components/schemas/EndpointUserAgentFilter"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     HTTPSEdgeRoute:
       type: object
@@ -10016,7 +9728,7 @@ components:
           $ref: "#/components/schemas/EndpointUserAgentFilter"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     HTTPSEdgeList:
       type: object
@@ -10382,7 +10094,7 @@ components:
           $ref: "#/components/schemas/EndpointIPPolicyMutate"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     TCPEdgeUpdate:
       type: object
@@ -10414,7 +10126,7 @@ components:
           $ref: "#/components/schemas/EndpointIPPolicyMutate"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     TCPEdge:
       type: object
@@ -10454,7 +10166,7 @@ components:
           $ref: "#/components/schemas/EndpointIPPolicy"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     TLSEdgeList:
       type: object
@@ -10505,7 +10217,7 @@ components:
           $ref: "#/components/schemas/EndpointTLSTermination"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     TLSEdgeUpdate:
       type: object
@@ -10543,7 +10255,7 @@ components:
           $ref: "#/components/schemas/EndpointTLSTermination"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     TLSEdge:
       type: object
@@ -10589,7 +10301,7 @@ components:
           $ref: "#/components/schemas/EndpointTLSTermination"
         traffic_policy:
           description: >
-            the traffic policy associated with this edge or null
+            the Traffic Policy associated with this edge or null
           $ref: "#/components/schemas/EndpointTrafficPolicy"
     Endpoint:
       type: object
@@ -10633,7 +10345,7 @@ components:
           type: integer
         type:
           description: >
-            whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud (represents a cloud endpoint)`
+            whether the endpoint is `ephemeral` (served directly by an agent-initiated tunnel) or `edge` (served by an edge) or `cloud` (represents a Cloud Endpoint)
           type: string
         metadata:
           description: >
@@ -10677,7 +10389,7 @@ components:
           $ref: "#/components/schemas/Ref"
         traffic_policy:
           description: >
-            The traffic policy attached to this endpoint
+            The Traffic Policy attached to this endpoint
           type: string
         bindings:
           description: >
@@ -10731,11 +10443,11 @@ components:
           type: string
         type:
           description: >
-            Type of endpoint. Only 'cloud' is currently supported (represents a cloud endpoint). Defaults to 'cloud' if not specified.
+            Type of endpoint. Only 'cloud' is currently supported (represents a Cloud Endpoint). Defaults to 'cloud' if not specified.
           type: string
         traffic_policy:
           description: >
-            The traffic policy attached to this endpoint
+            The Traffic Policy attached to this endpoint
           type: string
         description:
           description: >
@@ -10782,7 +10494,7 @@ components:
           type: string
         traffic_policy:
           description: >
-            The traffic policy attached to this endpoint
+            The Traffic Policy attached to this endpoint
           type: string
         description:
           description: >
@@ -10964,6 +10676,14 @@ components:
         ddsite:
           description: >
             Datadog site to send event to.
+          type: string
+        intake_host:
+          description: >
+            Hostname of a Datadog-compatible log intake to send events to instead of a Datadog site, with an optional path prefix such as intake.example.com/dd. Events go to the /api/v2/logs path after the prefix over HTTPS. Set either this or ddsite, not both.
+          type: string
+        auth_scheme:
+          description: >
+            How to send the API key. dd_api_key (the default) sends the DD-API-KEY header. bearer sends an Authorization: Bearer header.
           type: string
     EventTargetAzureLogsIngestion:
       type: object
@@ -11491,7 +11211,7 @@ components:
           type: string
         region:
           description: >
-            reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa)
+            reserve the address in this geographic ngrok datacenter. Optional, default is `us`. (`au`, `eu`, `ap`, `us`, `jp`, `in`, `sa`)
           type: string
     ReservedAddrUpdate:
       type: object
@@ -11536,7 +11256,7 @@ components:
           type: string
         region:
           description: >
-            reserve the address in this geographic ngrok datacenter. Optional, default is us. (au, eu, ap, us, jp, in, sa)
+            reserve the address in this geographic ngrok datacenter. Optional, default is `us`. (`au`, `eu`, `ap`, `us`, `jp`, `in`, `sa`)
           type: string
     ReservedAddrList:
       type: object
@@ -11564,7 +11284,7 @@ components:
           type: string
         region:
           description: >
-            deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (au, eu, ap, us, jp, in, sa)
+            deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (`au`, `eu`, `ap`, `us`, `jp`, `in`, `sa`)
           type: string
         description:
           description: >
@@ -11645,11 +11365,11 @@ components:
           type: string
         region:
           description: >
-            deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (au, eu, ap, us, jp, in, sa)
+            deprecated: With the launch of the ngrok Global Network domains traffic is now handled globally. This field applied only to endpoints. Note that agents may still connect to specific regions. Optional, null by default. (`au`, `eu`, `ap`, `us`, `jp`, `in`, `sa`)
           type: string
         cname_target:
           description: >
-            DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of an ngrok owned domain (e.g. *.ngrok.app)
+            DNS CNAME target for a custom hostname, or null if the reserved domain is a subdomain of an ngrok owned domain (for example, *.ngrok.app)
           type: string
         certificate:
           description: >
@@ -11874,6 +11594,12 @@ components:
           description: >
             timestamp when the api key was created, RFC 3339 format
           type: string
+        roles:
+          description: >
+            roles the service user holds, in a fixed order. Accepts developer, developer-readonly, and team-manager. Roles limit the service user's access tokens. They do not limit its API keys.
+          type: array
+          items:
+            type: string
     ServiceUserCreate:
       type: object
       properties:
@@ -11885,6 +11611,12 @@ components:
           description: >
             whether or not the service is active
           type: boolean
+        roles:
+          description: >
+            roles the service user holds. Defaults to developer. Any other choice needs a plan with role-based access control.
+          type: array
+          items:
+            type: string
     ServiceUserUpdate:
       type: object
       properties:
@@ -11899,6 +11631,12 @@ components:
           description: >
             whether or not the service is active
           type: boolean
+        roles:
+          description: >
+            roles that replace the service user's current roles. Any choice other than developer needs a plan with role-based access control.
+          type: array
+          items:
+            type: string
     ServiceUserList:
       type: object
       properties:
